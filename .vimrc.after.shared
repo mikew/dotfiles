@@ -1,0 +1,3 @@
+colorscheme mayansmoke
+call janus#add_mapping('ack', 'map', '<D-F>', ':Ack!<space>')
+call janus#add_mapping('ack', 'map', '<leader>f', ':Ack!<space>')

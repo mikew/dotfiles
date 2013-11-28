@@ -1,0 +1,16 @@
+"autocmd! VimEnter * NERDTree
+"autocmd! BufEnter * NERDTreeFind
+"autocmd! VimEnter * wincmd w
+
+autocmd! BufNewFile,BufEnter *.pys set ft=python
+
+set softtabstop=2
+set background=dark
+
+colorscheme jellybeans+
+
+let g:indent_guides_start_level = 2
+let g:indent_guides_enable_on_vim_startup = 1
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/

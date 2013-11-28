@@ -1,0 +1,54 @@
+" Powerline
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
+let g:airline_powerline_fonts = 1
+
+"autocmd! VimEnter * NERDTree
+"autocmd! BufEnter * NERDTreeFind
+"autocmd! VimEnter * wincmd w
+
+" https://github.com/klen/python-mode#settings
+"let g:pymode = 1
+let g:pymode_doc = 0
+"let g:pymode_run = 1
+"let g:pymode_lint = 1
+let g:pymode_rope = 0
+let g:pymode_folding = 0
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+"let g:python_highlight_all = 1
+"let g:pymode_syntax_highlight_self = g:pymode_syntax_all
+let g:pymode_lint_write = 0
+"let g:pymode_lint_checker = "pyflakes"
+
+autocmd BufNewFile,BufEnter *.pys set ft=python
+"autocmd filetype python syn keyword pythonBuiltinObj self cls
+
+"set softtabstop=2
+"set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
+set background=dark
+"colorscheme jellybeans+
+set noshowmode
+
+" Indent Guides
+let g:indent_guides_start_level = 3
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_color_change_percent = 5
+
+" Highlight over 80 characters
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+" No bells
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+" https://github.com/hdima/python-syntax#options-used-by-the-script
+"let g:python_highlight_all = 1
+"let g:python_version_2 = 1
+
+"set list listchars=tab:▷⋅,trail:⋅,nbsp:⋅
