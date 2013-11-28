@@ -5,7 +5,7 @@ ALL_DOTFILES=$DOTFILES_ROOT/*
 
 for DOT_FILE in $ALL_DOTFILES; do
   case $DOT_FILE in
-    *install.sh)
+    *install.sh|*examples|*resync.sh|*bootstrap.sh~|*recover-submodules.sh)
       continue ;;
     *)
       MOVE_OLD=0
@@ -29,4 +29,3 @@ for DOT_FILE in $ALL_DOTFILES; do
       [ 0 -lt $PERFORM ] && ln -s $DOT_FILE $TARGET_FILE
   esac
 done
-

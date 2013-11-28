@@ -1,0 +1,45 @@
+[submodule ".janus/tabular"]
+	path = .janus/tabular
+	url = https://github.com/godlygeek/tabular
+[submodule ".janus/autoclose"]
+	path = .janus/autoclose
+	url = https://github.com/Townk/vim-autoclose.git
+[submodule ".janus/vim-indent-guides"]
+	path = .janus/vim-indent-guides
+	url = https://github.com/nathanaelkane/vim-indent-guides.git
+[submodule ".janus/distinguished"]
+	path = .janus/distinguished
+	url = git://github.com/Lokaltog/vim-distinguished.git
+[submodule ".janus/jellybeans.vim"]
+	path = .janus/jellybeans.vim
+	url = git://github.com/nanotech/jellybeans.vim.git
+[submodule ".janus/swap-parameters"]
+	path = .janus/swap-parameters
+	url = git://github.com/vim-scripts/swap-parameters.git
+[submodule ".janus/python-syntax"]
+	path = .janus/python-syntax
+	url = https://github.com/hdima/python-syntax.git
+[submodule ".janus/vim-colors-solarized"]
+	path = .janus/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule ".janus/mayansmoke"]
+	path = .janus/mayansmoke
+	url = https://github.com/vim-scripts/mayansmoke.git
+[submodule ".janus/python-mode"]
+	path = .janus/python-mode
+	url = git://github.com/klen/python-mode.git
+[submodule ".janus/base16-vim"]
+	path = .janus/base16-vim
+	url = https://github.com/chriskempson/base16-vim
+[submodule ".janus/vim-airline"]
+	path = .janus/vim-airline
+	url = https://github.com/bling/vim-airline
+[submodule ".janus/vim-autocomplpop"]
+	path = .janus/vim-autocomplpop
+	url = https://github.com/othree/vim-autocomplpop.git
+[submodule ".janus/vim-l9"]
+	path = .janus/vim-l9
+	url = https://github.com/cfurrow/vim-l9.git
+[submodule ".janus/supertab"]
+	path = .janus/supertab
+	url = https://github.com/ervandew/supertab.git
