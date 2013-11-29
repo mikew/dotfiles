@@ -3,8 +3,9 @@
 DOTFILES_ROOT=$(pwd)
 #ALL_DOTFILES=$DOTFILES_ROOT/*.*
 ALL_DOTFILES=$(find . -maxdepth 1   \
-  -not -name '.'                    \
-  -not -name 'examples'             \
+  -not -name .                      \
+  -not -name .git                   \
+  -not -name examples               \
   -not -name README.md              \
   -not -name bootstrap.sh           \
   -not -name resync.sh              \
