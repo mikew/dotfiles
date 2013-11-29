@@ -1,3 +1,10 @@
+call janus#disable_plugin('buffergator')
+call janus#disable_plugin('snipmate')
+call janus#disable_plugin('snipmate')
+
+set mouse=a
+"let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
+
 " Powerline
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
@@ -32,6 +39,7 @@ set softtabstop=2
 set background=dark
 "colorscheme jellybeans+
 set noshowmode
+set iskeyword=@,48-57,_,192-255,-
 
 " Indent Guides
 let g:indent_guides_start_level = 3

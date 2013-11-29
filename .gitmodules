@@ -43,3 +43,6 @@
 [submodule ".janus/supertab"]
 	path = .janus/supertab
 	url = https://github.com/ervandew/supertab.git
+[submodule ".janus/terminalkeys.vim"]
+	path = .janus/terminalkeys.vim
+	url = https://github.com/nacitar/terminalkeys.vim.git
