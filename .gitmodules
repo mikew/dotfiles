@@ -34,9 +34,6 @@
 [submodule ".janus/vim-airline"]
 	path = .janus/vim-airline
 	url = https://github.com/bling/vim-airline
-[submodule ".janus/vim-autocomplpop"]
-	path = .janus/vim-autocomplpop
-	url = https://github.com/othree/vim-autocomplpop.git
 [submodule ".janus/vim-l9"]
 	path = .janus/vim-l9
 	url = https://github.com/cfurrow/vim-l9.git
