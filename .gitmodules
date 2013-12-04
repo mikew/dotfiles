@@ -40,9 +40,6 @@
 [submodule ".janus/vim-l9"]
 	path = .janus/vim-l9
 	url = https://github.com/cfurrow/vim-l9.git
-[submodule ".janus/supertab"]
-	path = .janus/supertab
-	url = https://github.com/ervandew/supertab.git
 [submodule ".janus/terminalkeys.vim"]
 	path = .janus/terminalkeys.vim
 	url = https://github.com/nacitar/terminalkeys.vim.git
