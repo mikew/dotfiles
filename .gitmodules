@@ -40,9 +40,6 @@
 [submodule ".janus/terminalkeys.vim"]
 	path = .janus/terminalkeys.vim
 	url = https://github.com/nacitar/terminalkeys.vim.git
-[submodule ".janus/neocomplcache"]
-	path = .janus/neocomplcache
-	url = https://github.com/Shougo/neocomplcache.vim.git
 [submodule ".janus/indentLine"]
 	path = .janus/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
