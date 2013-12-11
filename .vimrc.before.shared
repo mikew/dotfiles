@@ -5,15 +5,14 @@ call janus#disable_plugin('snipmate')
 set mouse=a
 "let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
 
-" Powerline
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
 let g:airline_powerline_fonts = 1
 
-"autocmd! VimEnter * NERDTree
-"autocmd! BufEnter * NERDTreeFind
-"autocmd! VimEnter * wincmd w
+" Highlight line and cursor
+set cursorline
+"set cursorcolumn
+
+" Highlight word under cursor like IDEs
+"autocmd! CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
 
 " https://github.com/klen/python-mode#settings
 "let g:pymode = 1
@@ -29,34 +28,76 @@ let g:pymode_syntax_all = 1
 let g:pymode_lint_write = 0
 "let g:pymode_lint_checker = "pyflakes"
 
+" Highlighting for .pys files (used in Plex)
 autocmd BufNewFile,BufEnter *.pys set ft=python
 "autocmd filetype python syn keyword pythonBuiltinObj self cls
 
-"set softtabstop=2
-"set softtabstop=4
 set shiftwidth=2
 set softtabstop=2
 set background=dark
-"colorscheme jellybeans+
 set noshowmode
 set iskeyword=@,48-57,_,192-255,-
 
 " Indent Guides
-let g:indent_guides_start_level = 3
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_start_level = 3
+"let g:indent_guides_guide_size = 1
+"let g:indent_guides_enable_on_vim_startup = 1
 "let g:indent_guides_color_change_percent = 5
 
+" Indent Lines
+let g:indentLine_enabled = 1
+let g:indentLine_faster = 1
+"let g:indentLine_char = '┆'
+
 " Highlight over 80 characters
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+set colorcolumn=80
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
 
 " No bells
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
-" https://github.com/hdima/python-syntax#options-used-by-the-script
-"let g:python_highlight_all = 1
-"let g:python_version_2 = 1
-
 "set list listchars=tab:▷⋅,trail:⋅,nbsp:⋅
+
+" NeoComplCache settings
+"let g:neocomplcache_enable_at_startup = 1
+"let g:neocomplcache_enable_auto_select = 1
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function()
+  "return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+"endfunction
+
+" <TAB>: completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" <C-h>, <BS>: close popup and delete backword char.
+"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-y>  neocomplcache#close_popup()
+"inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+
+nnoremap <C-]> :execute 'tj' expand('<cword>')<CR>zv
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+let g:SuperTabContextDiscoverDiscovery =
+    \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+
+python <<EOF
+import sys
+import vim
+sys.path.insert(0, vim._getcwd())
+EOF
