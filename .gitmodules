@@ -43,3 +43,6 @@
 [submodule ".janus/indentLine"]
 	path = .janus/indentLine
 	url = https://github.com/Yggdroot/indentLine.git
+[submodule ".janus/vim-virtualenv"]
+	path = .janus/vim-virtualenv
+	url = https://github.com/jmcantrell/vim-virtualenv.git
