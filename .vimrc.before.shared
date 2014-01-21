@@ -26,6 +26,11 @@ let g:pymode_syntax_all = 1
 "let g:python_highlight_all = 1
 "let g:pymode_syntax_highlight_self = g:pymode_syntax_all
 let g:pymode_lint_write = 0
+
+" E125: Makes indenting seem inconsistent with E128.
+" E128: You run into E501 much quicker.
+" E501: Django makes it really hard to keep lines short.
+let g:pymode_lint_ignore = "E501,E125,E128"
 "let g:pymode_lint_checker = "pyflakes"
 
 " Highlighting for .pys files (used in Plex)
@@ -99,5 +104,8 @@ let g:SuperTabContextDiscoverDiscovery =
 python <<EOF
 import sys
 import vim
-sys.path.insert(0, vim._getcwd())
+try:
+  sys.path.insert(0, vim._getcwd())
+except:
+  pass
 EOF
