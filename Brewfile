@@ -19,6 +19,7 @@ tap phinze/cask
 install brew-cask
 
 cask install alfred
+cask install bettertouchtool
 cask install macvim
 cask install steam
 cask install vlc
