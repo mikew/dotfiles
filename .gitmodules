@@ -46,3 +46,6 @@
 [submodule ".janus/vim-virtualenv"]
 	path = .janus/vim-virtualenv
 	url = https://github.com/jmcantrell/vim-virtualenv.git
+[submodule ".janus/editorconfig-vim.git"]
+	path = .janus/editorconfig-vim.git
+	url = git@github.com:editorconfig/editorconfig-vim.git
