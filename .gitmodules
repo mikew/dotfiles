@@ -1,9 +1,6 @@
 [submodule ".janus/tabular"]
 	path = .janus/tabular
 	url = https://github.com/godlygeek/tabular
-[submodule ".janus/autoclose"]
-	path = .janus/autoclose
-	url = https://github.com/Townk/vim-autoclose.git
 [submodule ".janus/vim-indent-guides"]
 	path = .janus/vim-indent-guides
 	url = https://github.com/nathanaelkane/vim-indent-guides.git
@@ -46,3 +43,12 @@
 [submodule ".janus/vim-virtualenv"]
 	path = .janus/vim-virtualenv
 	url = https://github.com/jmcantrell/vim-virtualenv.git
+[submodule ".janus/delimitMate"]
+	path = .janus/delimitMate
+	url = git@github.com:Raimondi/delimitMate.git
+[submodule ".janus/YouCompleteMe"]
+	path = .janus/YouCompleteMe
+	url = git@github.com:Valloric/YouCompleteMe.git
+[submodule ".janus/tern_for_vim"]
+	path = .janus/tern_for_vim
+	url = git@github.com:marijnh/tern_for_vim.git

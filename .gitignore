@@ -12,3 +12,9 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+
+# ctags file
+tags
+
+# 9am helpers
+.all-files

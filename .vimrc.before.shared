@@ -1,9 +1,22 @@
 call janus#disable_plugin('buffergator')
 call janus#disable_plugin('snipmate')
-call janus#disable_plugin('snipmate')
+"call janus#disable_plugin('supertab')
 
 set mouse=a
-"let g:ctrlp_user_command = 'git ls-files . --cached --exclude-standard --others'
+
+" Use git ls-files for Ctrl+P
+let g:ctrlp_working_path_mode = 'r'
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+    \ 'file': '\.exe$\|\.so$\|\.dll$' }
+
+let g:ctrlp_user_command = {
+    \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+    \ },
+    \ 'fallback': 'find %s -type f'
+\ }
 
 let g:airline_powerline_fonts = 1
 
@@ -51,8 +64,6 @@ let g:indentLine_faster = 1
 
 " Highlight over 80 characters
 set colorcolumn=80
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%81v.\+/
 
 " No bells
 set noerrorbells visualbell t_vb=
@@ -60,42 +71,37 @@ autocmd GUIEnter * set visualbell t_vb=
 
 "set list listchars=tab:▷⋅,trail:⋅,nbsp:⋅
 
-" NeoComplCache settings
-"let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_enable_auto_select = 1
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"function! s:my_cr_function()
-  "return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-"endfunction
-
-" <TAB>: completion.
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><C-y>  neocomplcache#close_popup()
-"inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
+" YouCompleteMe
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_server_log_level = 'debug'
+let g:ycm_complete_in_comments = 1
+"let g:ycm_filetype_whitelist = { 'cs': 1 }
+"let g:ycm_filetype_specific_completion_to_disable = { 'cs': 1 }
+let g:ycm_collect_identifiers_from_tags_files = 1
+"let g:ycm_key_invoke_completion = '<S-Tab>'
+"let g:ycm_key_invoke_completion = '<c-space>'
+"set completeopt-=preview
 
 nnoremap <C-]> :execute 'tj' expand('<cword>')<CR>zv
 
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+"if has("autocmd") && exists("+omnifunc")
+  "autocmd Filetype *
+        "\ if &omnifunc == "" |
+        "\   setlocal omnifunc=syntaxcomplete#Complete |
+        "\ endif
+"endif
+
+" SuperTab
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 let g:SuperTabContextDiscoverDiscovery =
     \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
+" Add cwd to vim python path
 python <<EOF
 import sys
 import vim

@@ -5,7 +5,7 @@ set guioptions-=r
 set guioptions-=R
 set guioptions-=L
 set guioptions+=e
-set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
+set guifont=Inconsolata-dz\ for\ Powerline:h12
 set showtabline=2
 "set background=dark
 "colorscheme base16-tomorrow
