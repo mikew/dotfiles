@@ -46,9 +46,6 @@
 [submodule ".janus/delimitMate"]
 	path = .janus/delimitMate
 	url = git@github.com:Raimondi/delimitMate.git
-[submodule ".janus/YouCompleteMe"]
-	path = .janus/YouCompleteMe
-	url = git@github.com:Valloric/YouCompleteMe.git
 [submodule ".janus/tern_for_vim"]
 	path = .janus/tern_for_vim
 	url = git@github.com:marijnh/tern_for_vim.git
