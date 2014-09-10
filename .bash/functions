@@ -262,3 +262,15 @@ teamo () {
 
   tmux attach-session -t "$prj" || tmux new-session "teamocil \"$prj\""
 }
+
+ssh-tunnel-port () {
+  local host="$1"
+  local port="$2"
+
+  ssh -NL "$port":0.0.0.0:"$port" "$host"
+}
+
+ssh-proxy () {
+  local host="$1"
+  ssh -D 8888 "$host"
+}
