@@ -1,15 +1,17 @@
+" To hell with Ex mode
+map Q <Nop>
+
 call janus#disable_plugin('buffergator')
 call janus#disable_plugin('snipmate')
-"call janus#disable_plugin('supertab')
-
-set mouse=a
+call janus#disable_plugin('supertab')
+call janus#disable_plugin('NERDTree')
 
 " Use matcher for Ctrl+P
 let g:path_to_matcher = "/usr/local/bin/matcher"
-
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
-
 let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+
+let g:jsx_ext_required = 0
 
 function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
 
@@ -48,6 +50,7 @@ endfunction
 "    \ 'fallback': 'find %s -type f'
 "\ }
 
+"let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
 " Highlight line and cursor
@@ -56,6 +59,8 @@ set cursorline
 
 " Highlight word under cursor like IDEs
 "autocmd! CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
+au BufNewFile,BufRead *.xm,*.xmm,*.l.mm setf logos
 
 " https://github.com/klen/python-mode#settings
 "let g:pymode = 1
@@ -69,6 +74,15 @@ let g:pymode_syntax_all = 1
 "let g:python_highlight_all = 1
 "let g:pymode_syntax_highlight_self = g:pymode_syntax_all
 let g:pymode_lint_write = 0
+let g:NERDTreeWinPos = "right"
+let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_debug_file = '~/Desktop/syntastic.log'
+set mouse=a
+set synmaxcol=200
+set shiftwidth=2
+set softtabstop=2
+set background=dark
+set noshowmode
 
 " E125: Makes indenting seem inconsistent with E128.
 " E128: You run into E501 much quicker.
@@ -80,12 +94,6 @@ let g:pymode_lint_ignore = "E501,E125,E128"
 autocmd BufNewFile,BufEnter *.pys set ft=python
 "autocmd filetype python syn keyword pythonBuiltinObj self cls
 
-set shiftwidth=2
-set softtabstop=2
-set background=dark
-set noshowmode
-set iskeyword=@,48-57,_,192-255,-
-
 " Indent Guides
 "let g:indent_guides_start_level = 3
 "let g:indent_guides_guide_size = 1
@@ -95,7 +103,9 @@ set iskeyword=@,48-57,_,192-255,-
 " Indent Lines
 let g:indentLine_enabled = 1
 let g:indentLine_faster = 1
-"let g:indentLine_char = '┆'
+"let g:indentLine_char = '︙'
+let g:indentLine_color_term = 239
+let g:indentLine_color_dark = 1
 
 " Highlight over 80 characters
 set colorcolumn=80
@@ -117,6 +127,20 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 "let g:ycm_key_invoke_completion = '<c-space>'
 "set completeopt-=preview
 
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,coffee,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
+
 nnoremap <C-]> :execute 'tj' expand('<cword>')<CR>zv
 
 filetype plugin on
@@ -130,11 +154,10 @@ set omnifunc=syntaxcomplete#Complete
 
 " SuperTab
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-let g:SuperTabContextDiscoverDiscovery =
-    \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+"let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+"let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+"let g:SuperTabContextDiscoverDiscovery = \ ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
 
 " Add cwd to vim python path
 python <<EOF

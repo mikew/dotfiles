@@ -58,3 +58,24 @@
 [submodule ".janus/YouCompleteMe"]
 	path = .janus/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule ".janus/tern_for_vim_coffee"]
+	path = .janus/tern_for_vim_coffee
+	url = https://github.com/othree/tern_for_vim_coffee.git
+[submodule ".janus/Gundo"]
+	path = .janus/Gundo
+	url = https://github.com/vim-scripts/Gundo.git
+[submodule ".janus/vim-go"]
+	path = .janus/vim-go
+	url = https://github.com/fatih/vim-go
+[submodule ".janus/nimrod.vim"]
+	path = .janus/nimrod.vim
+	url = https://github.com/zah/nimrod.vim
+[submodule ".janus/vim-bracketed-paste"]
+	path = .janus/vim-bracketed-paste
+	url = https://github.com/ConradIrwin/vim-bracketed-paste
+[submodule ".janus/vim-jsx"]
+	path = .janus/vim-jsx
+	url = https://github.com/mxw/vim-jsx.git
+[submodule ".janus/vim-javascript"]
+	path = .janus/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git

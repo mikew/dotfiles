@@ -2,3 +2,4 @@
 colorscheme Tomorrow-Night
 call janus#add_mapping('ack', 'map', '<D-F>', ':Ack!<space>')
 call janus#add_mapping('ack', 'map', '<leader>f', ':Ack!<space>')
+set iskeyword=@,48-57,_,192-255,-
