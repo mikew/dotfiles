@@ -1,35 +1,28 @@
-install bash
-install ctags
-install editorconfig
-install git
-install the_silver_searcher
+#!/usr/bin/env bash
 
-install node
-install python
-install rbenv
-install ruby-build
+brew install bash
+brew install ctags
+brew install editorconfig
+brew install git
+brew install the_silver_searcher
+brew install macvim
 
-install redis
-install sqlite
+brew install node
+brew install python
+brew install ruby-install
 
-install wget
-install tmux
+brew install redis
+brew install sqlite
 
-tap phinze/cask
-install brew-cask
+brew install wget
+brew install tmux
 
-cask install alfred
-cask install bettertouchtool
-cask install macvim
-cask install steam
-cask install vlc
+brew install caskroom/cask/brew-cask
 
-cask install firefox
-cask install google-chrome
-
-cask install github
-cask install virtualbox
-cask install vmware-fusion
-
-#cask install plex-media-server
-#cask install transmission
+brew cask install bettertouchtool
+brew cask install steam
+brew cask install firefox
+brew cask install google-chrome
+brew cask install github
+brew cask install iterm2
+brew cask install caskroom/fonts/font-inconsolata-dz-for-powerline

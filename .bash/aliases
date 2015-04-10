@@ -14,16 +14,16 @@ alias unicorn='be unicorn'
 alias watchr='be watchr'
 
 # easy sync home
-alias tankmine-sync='unison-sync tankmine.local'
+#alias tankmine-sync='unison-sync tankmine.local'
 
 # easy reload passenger
-alias reload-passenger="touch tmp/restart.txt"
+#alias reload-passenger="touch tmp/restart.txt"
 
 # look for process
 alias psgrep="ps aux | grep -v grep | grep -i"
 
 # wakeup tankmine
-alias wakeup-tankmine="curl http://709scene.dyndns.org:8080/"
+#alias wakeup-tankmine="curl http://709scene.dyndns.org:8080/"
 
 # git
 alias gci='git commit'
@@ -44,10 +44,10 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias d="cd ~/Documents/Dropbox"
+#alias d="cd ~/Documents/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias p="cd ~/Projects"
+#alias p="cd ~/Projects"
 alias g="git"
 alias h="history"
 alias j="jobs"
@@ -123,6 +123,9 @@ alias badge="tput bel"
 # For example, to list all directories that contain a certain file:
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1"
+
+# Grep with context
+alias grepc="grep -B 3 -A 3"
 
 # One of @janmoesen’s ProTip™s
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do

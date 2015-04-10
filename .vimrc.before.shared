@@ -36,6 +36,9 @@ function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
 
 endfunction
 
+" Stop with trying to be cute and hide noisy quotes in JSON
+set conceallevel=0
+
 " Use git ls-files for Ctrl+P
 "let g:ctrlp_working_path_mode = 'r'
 "let g:ctrlp_custom_ignore = {

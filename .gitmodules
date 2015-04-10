@@ -79,3 +79,6 @@
 [submodule ".janus/vim-javascript"]
 	path = .janus/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule ".janus/Dockerfile.vim"]
+	path = .janus/Dockerfile.vim
+	url = https://github.com/ekalinin/Dockerfile.vim.git
