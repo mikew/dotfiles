@@ -1,11 +1,25 @@
 :source ~/.vimrc.after.shared
 
 set guioptions-=t
+set guioptions-=T
+set guioptions-=m
 set guioptions-=r
 set guioptions-=R
 set guioptions-=L
-set guioptions+=e
-set guifont=Inconsolata-dz\ for\ Powerline:h12
+set guioptions-=e
+
+" 80 chars and some room for NERDTree
+set columns=115
+set lines=60
+
+if has("macunix")
+  set guifont=Inconsolata-dz\ for\ Powerline:h12
+endif
+
+if has("unix")
+  set guifont=Inconsolata-dz\ for\ Powerline\ 10
+endif
+
 set showtabline=2
 "set background=dark
 "colorscheme base16-tomorrow
