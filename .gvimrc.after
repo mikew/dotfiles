@@ -1,11 +1,17 @@
-:source ~/.vimrc.after.shared
+echo "Loading gvimrc.after"
+
+" CtrlP OS-X Menu remapping
+if Janus_is_plugin_enabled('ctrlp') && has("gui_macvim")
+  macmenu &File.New\ Tab key=<D-S-t>
+endif
 
 set guioptions-=t
 set guioptions-=r
 set guioptions-=R
 set guioptions-=L
 set guioptions+=e
-set guifont=Inconsolata-dz\ for\ Powerline:h12
+"set guifont=Inconsolata-dz\ for\ Powerline:h12
+set guifont=Office\ Code\ Pro\ Light:h12
 set showtabline=2
 "set background=dark
 "colorscheme base16-tomorrow

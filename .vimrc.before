@@ -1,1 +1,50 @@
-source ~/.vimrc.before.shared
+"colorscheme base16-tomorrow
+let g:dotvim_colorscheme = 'base16-tomorrow'
+set iskeyword=@,48-57,_,192-255,-
+
+let g:jsx_ext_required = 0
+let base16colorspace=256
+let g:airline_powerline_fonts = 1
+"set list listchars=tab:▷⋅,trail:⋅,nbsp:⋅
+
+" Stop with trying to be cute and hide noisy quotes in JSON
+let g:vim_json_syntax_conceal = 0
+
+" Highlight word under cursor like IDEs
+"autocmd! CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
+" iOS tweak files?
+au BufNewFile,BufRead *.xm,*.xmm,*.l.mm setf logos
+
+" TODO ???
+nnoremap <C-]> :execute 'tj' expand('<cword>')<CR>zv
+
+if has("gui_running")
+  if has("autocmd")
+    " Automatically resize splits when resizing MacVim window
+    autocmd VimResized * wincmd =
+  endif
+endif
+
+source ~/.vimext/janus_compat.vim
+source ~/.vimext/vimsettings.vim
+source ~/.vimext/ctrlp.vim
+source ~/.vimext/python.vim
+source ~/.vimext/indent_guides.vim
+source ~/.vimext/indent_lines.vim
+source ~/.vimext/ycm.vim
+source ~/.vimext/uuid.vim
+source ~/.vimext/mappings.vim
+source ~/.vimext/nerdcommenter.vim
+source ~/.vimext/fugitive.vim
+source ~/.vimext/gist.vim
+source ~/.vimext/gundo.vim
+source ~/.vimext/narrowregion.vim
+source ~/.vimext/nerdtree.vim
+source ~/.vimext/syntastic.vim
+source ~/.vimext/tagbar.vim
+source ~/.vimext/vimwiki.vim
+source ~/.vimext/make.vim
+source ~/.vimext/ack.vim
+source ~/.vimext/yankring.vim
+source ~/.vimext/airline.vim
