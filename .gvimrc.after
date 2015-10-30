@@ -1,7 +1,5 @@
-echo "Loading gvimrc.after"
-
 " CtrlP OS-X Menu remapping
-if Janus_is_plugin_enabled('ctrlp') && has("gui_macvim")
+if has("gui_macvim")
   macmenu &File.New\ Tab key=<D-S-t>
 endif
 

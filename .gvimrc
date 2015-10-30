@@ -22,7 +22,4 @@
 "endif
 
 " Customize to your needs...
-
-echo "Loading gvimrc"
-source ~/.gvimrc.before
 source ~/.gvimrc.after

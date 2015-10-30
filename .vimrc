@@ -28,6 +28,6 @@ endif
 "let g:dotvim_colorscheme = 'base16-tomorrow'
 
 " Customize to your needs...
-source ~/.vimrc.before
-
+set rtp+=~/.vimext/
+source ~/.vimext/before/nerdtree.vim
 source ~/.vimrc.after
