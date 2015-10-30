@@ -1652,25 +1652,41 @@ if [ ${#list[@]} -gt 0 ]; then
 fi
 unset list
 
+load_completions_from () {
+    local dir="$1"
+
+    if [[ -d $dir && -r $dir && -x $dir ]]; then
+        for i in $(LC_ALL=C command ls "$dir"); do
+            local i=$dir/$i
+            [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
+                && -f $i && -r $i ]] && . "$i"
+        done
+    fi
+}
+
+load_completions_from /usr/local/etc/bash_completion.d
+load_completions_from $BASH_COMPLETION_COMPAT_DIR
+load_completions_from $BASH_COMPLETION_DIR
+
 # source completion directory definitions
-if [[ -d $BASH_COMPLETION_COMPAT_DIR && -r $BASH_COMPLETION_COMPAT_DIR && \
-    -x $BASH_COMPLETION_COMPAT_DIR ]]; then
-    for i in $(LC_ALL=C command ls "$BASH_COMPLETION_COMPAT_DIR"); do
-        i=$BASH_COMPLETION_COMPAT_DIR/$i
-        [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
-            && -f $i && -r $i ]] && . "$i"
-    done
-fi
-if [[ $BASH_COMPLETION_DIR != $BASH_COMPLETION_COMPAT_DIR && \
-    -d $BASH_COMPLETION_DIR && -r $BASH_COMPLETION_DIR && \
-    -x $BASH_COMPLETION_DIR ]]; then
-    for i in $(LC_ALL=C command ls "$BASH_COMPLETION_DIR"); do
-        i=$BASH_COMPLETION_DIR/$i
-        [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
-            && -f $i && -r $i ]] && . "$i"
-    done
-fi
-unset i
+#if [[ -d $BASH_COMPLETION_COMPAT_DIR && -r $BASH_COMPLETION_COMPAT_DIR && \
+#    -x $BASH_COMPLETION_COMPAT_DIR ]]; then
+#    for i in $(LC_ALL=C command ls "$BASH_COMPLETION_COMPAT_DIR"); do
+#        i=$BASH_COMPLETION_COMPAT_DIR/$i
+#        [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
+#            && -f $i && -r $i ]] && . "$i"
+#    done
+#fi
+#if [[ $BASH_COMPLETION_DIR != $BASH_COMPLETION_COMPAT_DIR && \
+#    -d $BASH_COMPLETION_DIR && -r $BASH_COMPLETION_DIR && \
+#    -x $BASH_COMPLETION_DIR ]]; then
+#    for i in $(LC_ALL=C command ls "$BASH_COMPLETION_DIR"); do
+#        i=$BASH_COMPLETION_DIR/$i
+#        [[ ${i##*/} != @(*~|*.bak|*.swp|\#*\#|*.dpkg*|*.rpm@(orig|new|save)|Makefile*) \
+#            && -f $i && -r $i ]] && . "$i"
+#    done
+#fi
+#unset i
 
 # source user completion file
 [[ $BASH_COMPLETION != ~/.bash_completion && -r ~/.bash_completion ]] \
