@@ -22,4 +22,4 @@
 "endif
 
 " Customize to your needs...
-source ~/.gvimrc.after
+source ~/.vimext/.gvimrc.after
