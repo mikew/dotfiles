@@ -22,3 +22,5 @@ match OverLength /\%81v.\+/
 " No bells
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
+let mapleader = "\\"
+let maplocalleader = "\\"
