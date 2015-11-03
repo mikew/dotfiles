@@ -1,5 +1,5 @@
-colorscheme base16-tomorrow
-let g:dotvim_colorscheme = 'base16-tomorrow'
+"colorscheme base16-tomorrow
+"let g:dotvim_colorscheme = 'base16-tomorrow'
 set iskeyword=@,48-57,_,192-255,-
 
 let g:jsx_ext_required = 0
@@ -20,9 +20,33 @@ au BufNewFile,BufRead *.xm,*.xmm,*.l.mm setf logos
 nnoremap <C-]> :execute 'tj' expand('<cword>')<CR>zv
 
 " Automatically resize splits when resizing window
-if has("gui_running")
-  if has("autocmd")
-    autocmd VimResized * wincmd =
-  endif
-endif
+"if has("gui_running")
+  "if has("autocmd")
+    "autocmd VimResized * wincmd =
+  "endif
+"endif
 
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+"let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsExpandTrigger = "<nop>"
+let g:ulti_expand_or_jump_res = 0
+function ExpandSnippetOrCarriageReturn()
+  let snippet = UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+    return snippet
+  else
+    return "\<CR>"
+  endif
+endfunction
+"inoremap <expr> <CR> pumvisible() ? "\<C-R>=ExpandSnippetOrCarriageReturn()\<CR>" : "\<CR>"
+
+let g:endwise_no_mappings = 1
+inoremap <expr> <C-X><CR> pumvisible() ? "\<C-R>=ExpandSnippetOrCarriageReturn()\<CR>" : "\<CR>\<C-R>=EndwiseAlways()\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-R>=ExpandSnippetOrCarriageReturn()\<CR>" : "\<CR>\<C-R>=EndwiseDiscretionary()\<CR>"

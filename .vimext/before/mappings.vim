@@ -28,3 +28,14 @@ nmap <leader>et :tabe <C-R>=expand('%:h').'/'<cr>
 
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+
+"make Y consistent with C and D
+nnoremap Y y$
+
+" Ctrl-N to disable search match highlight
+nmap <silent> <C-N> :silent noh<CR>
+
+" keep selection after in/outdent
+vnoremap < <gv
+vnoremap > >gv
+
