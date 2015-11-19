@@ -1,41 +1,53 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 DOTFILES_ROOT=$(pwd)
-#ALL_DOTFILES=$DOTFILES_ROOT/*.*
-ALL_DOTFILES=$(find . -maxdepth 1   \
-  -not -name .                      \
-  -not -name .git                   \
-  -not -name examples               \
-  -not -name README.md              \
-  -not -name bootstrap.sh           \
-  -not -name resync.sh              \
-  -not -name bootstrap.sh~          \
-  -not -name install.sh             \
-  -not -name recover-submodules.sh)
 
-for DOT_FILE in $ALL_DOTFILES; do
-  case $DOT_FILE in
-    *install.sh|*examples|*resync.sh|*bootstrap.sh~|*recover-submodules.sh)
-      continue ;;
-    *)
-      MOVE_OLD=0
-      PERFORM=1
-      FILE_NAME=$(basename "$DOT_FILE")
-      TARGET_FILE="$HOME/$FILE_NAME"
+main () {
+  list-dotfiles | while read filename; do
+    link-dotfile "$filename"
+  done
+}
 
-      if [ -e $TARGET_FILE ]; then
-        if [ $DOT_FILE -ef $TARGET_FILE ]; then
-          PERFORM=0
-        else
-          MOVE_OLD=1
-        fi
-      fi
+link-dotfile () {
+  DOT_FILE="$1"
+  MOVE_OLD=0
+  PERFORM=1
+  FILE_NAME=$(basename "$DOT_FILE")
+  TARGET_FILE="$HOME/$FILE_NAME"
 
-      if [ 0 -lt $MOVE_OLD ]; then
-        echo Moving $TARGET_FILE to $TARGET_FILE.old
-        mv "$TARGET_FILE" "$TARGET_FILE.old"
-      fi
+  if [ -e "$TARGET_FILE" ]; then
+    if [ "$DOT_FILE" -ef "$TARGET_FILE" ]; then
+      PERFORM=0
+    else
+      MOVE_OLD=1
+    fi
+  fi
 
-      [ 0 -lt $PERFORM ] && ln -s "$DOTFILES_ROOT/$FILE_NAME" "$TARGET_FILE"
-  esac
-done
+  if [ $MOVE_OLD -eq 1 ]; then
+    echo "Moving $TARGET_FILE to $TARGET_FILE.old"
+    mv "$TARGET_FILE" "$TARGET_FILE.old"
+  fi
+
+  if [ $PERFORM -eq 1 ]; then
+    echo "Linking $DOT_FILE to $TARGET_FILE"
+    ln -s "$DOTFILES_ROOT/$FILE_NAME" "$TARGET_FILE"
+  fi
+}
+
+list-dotfiles () {
+  find . -maxdepth 1 \
+    -not -name . \
+    -not -name .git \
+    -not -name .gitmodules \
+    -not -name examples \
+    -not -name README.md \
+    -not -name bootstrap.sh \
+    -not -name resync.sh \
+    -not -name install.sh \
+    -not -name '*.swp' \
+    -not -name '*~' \
+    -not -name recover-submodules.sh
+}
+
+main "$@"
+#list-dotfiles

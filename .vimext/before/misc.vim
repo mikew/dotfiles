@@ -1,6 +1,6 @@
 "colorscheme base16-tomorrow
 "let g:dotvim_colorscheme = 'base16-tomorrow'
-set iskeyword=@,48-57,_,192-255,-
+"set iskeyword+=,-
 
 let g:jsx_ext_required = 0
 let base16colorspace=256

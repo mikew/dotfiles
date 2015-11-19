@@ -12,6 +12,11 @@ filetype plugin on
 set omnifunc=syntaxcomplete#Complete
 set wildmenu            " enhanced command completion
 
+set nobackup            " do not write backup files
+set noswapfile          " do not write .swp files
+set undofile
+
+autocmd BufEnter * set iskeyword+=-
 
 " Highlight line and cursor
 set cursorline
@@ -19,8 +24,8 @@ set cursorline
 
 " Highlight over 80 characters
 set colorcolumn=80
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"autocmd BufEnter * highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"autocmd BufEnter * match OverLength /\%81v.\+/
 
 " No bells
 set noerrorbells visualbell t_vb=

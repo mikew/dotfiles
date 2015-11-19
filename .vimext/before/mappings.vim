@@ -1,3 +1,7 @@
+" Make CMD-Left go to ^ and not 0
+map <D-Left> ^
+imap <D-Left> <Esc>I
+
 " Toggle paste mode
 nmap <silent> <F4> :set invpaste<CR>:set paste?<CR>
 imap <silent> <F4> <ESC>:set invpaste<CR>:set paste?<CR>

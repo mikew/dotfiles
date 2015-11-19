@@ -1,5 +1,6 @@
 colorscheme base16-tomorrow
 let g:dotvim_colorscheme = 'base16-tomorrow'
+
 "source ~/.vimext/before/ack.vim
 "source ~/.vimext/before/airline.vim
 "source ~/.vimext/before/ctrlp.vim

@@ -1,4 +1,6 @@
 source ~/.vimext/before/ack.vim
+source ~/.vimext/before/dragvisuals.vim
+source ~/.vimext/before/nerdtree.vim
 source ~/.vimext/before/airline.vim
 source ~/.vimext/before/ctrlp.vim
 source ~/.vimext/before/indent_guides.vim
