@@ -1,1 +1,1 @@
-source ~/.janus-src/janus/vim/gvimrc
+source ~/.janus-src/vim/gvimrc
