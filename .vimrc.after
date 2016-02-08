@@ -1,15 +1,1 @@
 colorscheme base16-tomorrow
-let g:dotvim_colorscheme = 'base16-tomorrow'
-
-"source ~/.vimext/before/ack.vim
-"source ~/.vimext/before/airline.vim
-"source ~/.vimext/before/ctrlp.vim
-"source ~/.vimext/before/indent_guides.vim
-"source ~/.vimext/before/indent_lines.vim
-"source ~/.vimext/before/mappings.vim
-"source ~/.vimext/before/misc.vim
-"source ~/.vimext/before/python.vim
-"source ~/.vimext/before/uuid.vim
-"source ~/.vimext/before/vimsettings.vim
-"source ~/.vimext/before/yankring.vim
-"source ~/.vimext/before/ycm.vim

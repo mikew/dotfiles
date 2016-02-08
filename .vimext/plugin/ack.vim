@@ -1,5 +1,5 @@
 "let g:ackprg = 'ag --nogroup --nocolor --column'
-let g:ackprg = 'ag --vimgrep'
+"let g:ackprg = 'ag --vimgrep'
 let g:ackpreview = 0
 
 "if has("gui_macvim") && has("gui_running")
