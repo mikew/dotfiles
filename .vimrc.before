@@ -1,6 +1,4 @@
 "let g:nerdtree_tabs_autofind = 1
 let g:nerdtree_tabs_synchronize_focus = 0
 
-for rcfile in split(globpath('~/.vimext/plugin', '*.vim'), '\n')
-  execute('source '.rcfile)
-endfor
+call janus#source_files_in('~/.vimext/plugin')
