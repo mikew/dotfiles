@@ -10,10 +10,6 @@ let g:pymode_syntax_all = 1
 "let g:python_highlight_all = 1
 "let g:pymode_syntax_highlight_self = g:pymode_syntax_all
 let g:pymode_lint_write = 0
-let g:NERDTreeWinPos = "right"
-let g:syntastic_javascript_checkers = ['jsxhint']
-let g:syntastic_debug_file = '~/Desktop/syntastic.log'
-"let g:syntastic_python_flake8_args='--ignore=E501'
 
 " E125: Makes indenting seem inconsistent with E128.
 " E128: You run into E501 much quicker.

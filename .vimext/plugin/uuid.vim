@@ -1,5 +1,5 @@
 " Easily generate UUIDs
-fu! GenerateUUIDAfterCursor()
+function! GenerateUUIDAfterCursor()
 python << EOF
 import uuid
 import vim
@@ -13,7 +13,7 @@ EOF
 endfunction
 noremap <Leader>r :call GenerateUUIDAfterCursor()<CR>
 
-fu! GenerateUUIDBeforeCursor()
+function! GenerateUUIDBeforeCursor()
 python << EOF
 import uuid
 import vim

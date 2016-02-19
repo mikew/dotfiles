@@ -19,6 +19,10 @@ au BufNewFile,BufRead *.xm,*.xmm,*.l.mm setf logos
 " TODO ???
 nnoremap <C-]> :execute 'tj' expand('<cword>')<CR>zv
 
+let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_debug_file = '~/Desktop/syntastic.log'
+"let g:syntastic_python_flake8_args='--ignore=E501'
+"
 " Automatically resize splits when resizing window
 "if has("gui_running")
   "if has("autocmd")
