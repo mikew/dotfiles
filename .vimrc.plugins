@@ -16,7 +16,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': 'brew install cmake go mono && npm instal
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'mbbill/undotree'
 Plug 'Raimondi/delimitMate'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
