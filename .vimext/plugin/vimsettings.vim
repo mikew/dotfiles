@@ -5,7 +5,7 @@ syntax on
 set mouse=a
 set synmaxcol=200
 set shiftwidth=2
-set softtabstop=2
+set softtabstop=-1
 set background=dark
 set noshowmode
 filetype plugin on
