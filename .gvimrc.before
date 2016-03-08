@@ -4,7 +4,7 @@ set guioptions-=R
 set guioptions-=L
 set guioptions+=e
 "set guifont=Inconsolata-dz\ for\ Powerline:h12
-set guifont=Office\ Code\ Pro\ Light:h13
+call janus#Guifont('Input', 13)
 set showtabline=2
 "set background=dark
 "colorscheme base16-tomorrow
