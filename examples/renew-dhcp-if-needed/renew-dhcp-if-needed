@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+ping -c 1 -t 5 google.ca && exit
+
+date >> /tmp/renew-dhcp-if-needed
+echo "add State:/Network/Interface/en0/RefreshConfiguration temporary" | sudo scutil
