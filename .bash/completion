@@ -1664,6 +1664,7 @@ load_completions_from () {
     fi
 }
 
+load_completions_from /etc/bash_completion.d
 load_completions_from /usr/local/etc/bash_completion.d
 load_completions_from $BASH_COMPLETION_COMPAT_DIR
 load_completions_from $BASH_COMPLETION_DIR
