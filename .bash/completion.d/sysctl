@@ -1,24 +1,32 @@
-# bash completion for sysctl
+# bash completion for sysctl                               -*- shell-script -*-
 
-have sysctl &&
 _sysctl()
 {
-    local cur
+    local cur prev words cword
+    _init_completion || return
 
-    COMPREPLY=()
-    _get_comp_words_by_ref cur
+    case $prev in
+        --help|--version)
+            return
+            ;;
+        -p)
+            _filedir conf
+            return
+            ;;
+    esac
 
-    COMPREPLY=( $( compgen -W \
-        "$( PATH="$PATH:/sbin" sysctl -N -a 2>/dev/null )" -- "$cur" ) )
-
-    return 0
+    if [[ $cur == -* ]]; then
+        local opts="$( _parse_help "$1" )"
+        [[ $opts ]] || opts="$( _parse_usage "$1" )"
+        COMPREPLY=( $( compgen -W "$opts" -- "$cur" ) )
+    else
+        local suffix=
+        [[ $prev == -w ]] && suffix==
+        COMPREPLY=( $( compgen -S "$suffix" -W \
+            "$( PATH="$PATH:/sbin" sysctl -N -a 2>/dev/null )" -- "$cur" ) )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
+    fi
 } &&
 complete -F _sysctl sysctl
 
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: filetype=sh

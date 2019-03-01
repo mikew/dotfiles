@@ -1,23 +1,36 @@
-# bash completion for smartctl(8)
+# bash completion for smartctl(8)                          -*- shell-script -*-
 
-have smartctl &&
-{
 _smartctl_quietmode()
 {
     COMPREPLY=( $( compgen -W 'errorsonly silent noserial' -- "$cur" ) )
 }
 _smartctl_device()
 {
-    local i opts='ata scsi sat marvell hpt cciss'
-    for (( i=0; i <= 31; i++ )) ; do
-        opts="$opts 3ware,$i"
-    done
-    COMPREPLY=( $( compgen -W "$opts" -- "$cur" ) )
+    case $cur in
+        areca*|3ware*|megaraid*|cciss*)
+            COMPREPLY+=( ${cur%%,*},{0..31} )
+            COMPREPLY=( $( compgen -W '"${COMPREPLY[@]}"' -- "$cur" ) )
+            ;;
+        hpt*)
+            COMPREPLY+=( hpt,{1..4}/{1..8} hpt,{1..4}/{1..8}/{1..5} )
+            COMPREPLY=( $( compgen -W '"${COMPREPLY[@]}"' -- "$cur" ) )
+            ;;
+        *)
+            COMPREPLY=( $( compgen -W "ata scsi sat usbcypress usbjmicron
+                usbsunplus marvell areca 3ware hpt megaraid cciss auto test" \
+                    -- "$cur" ) )
+            case "${COMPREPLY[@]}" in
+                areca|3ware|hpt|megaraid|cciss)
+                    compopt -o nospace
+                    ;;
+            esac
+            ;;
+    esac
 }
 _smartctl_tolerance()
 {
-    COMPREPLY=( $( compgen -W 'normal conservative permissive \
-        verypermissive' -- "$cur" ) )
+    COMPREPLY=( $( compgen -W 'normal conservative permissive verypermissive' \
+        -- "$cur" ) )
 }
 _smartctl_badsum()
 {
@@ -37,14 +50,16 @@ _smartctl_feature()
 }
 _smartctl_log()
 {
-    COMPREPLY=( $( compgen -W 'error selftest selective directory' -- "$cur" ) )
+    COMPREPLY=( $( compgen -W 'error selftest selective directory background
+        sasphy sasphy,reset sataphy sataphy,reset scttemp scttempsts
+        scttemphist scterc gplog smartlog xerror xselftest' -- "$cur" ) )
 }
 _smartctl_vendorattribute()
 {
-    COMPREPLY=( $( compgen -W 'help 9,minutes 9,seconds 9,halfminutes \
-                9,temp 192,emergencyretractcyclect 193,loadunload \
-                194,10xCelsius 194,unknown 198,offlinescanuncsectorct \
-                200,writeerrorcount 201,detectedtacount 220,temp' -- "$cur" ) )
+    COMPREPLY=( $( compgen -W 'help 9,minutes 9,seconds 9,halfminutes 9,temp
+        192,emergencyretractcyclect 193,loadunload 194,10xCelsius 194,unknown
+        198,offlinescanuncsectorct 200,writeerrorcount 201,detectedtacount
+        220,temp' -- "$cur" ) )
 }
 _smartctl_firmwarebug()
 {
@@ -57,19 +72,27 @@ _smartctl_presets()
 }
 _smartctl_test()
 {
-    COMPREPLY=( $( compgen -W 'offline short long conveyance select \
-                afterselect,on afterselect,off pending scttempint' -- "$cur" ) )
+    [[ $cur == @(pending|scttempint|vendor), ]] && return
+    COMPREPLY=( $( compgen -W 'offline short long conveyance select,
+        select,redo select,next afterselect,on afterselect,off pending,
+        scttempint, vendor,' -- "$cur" ) )
+    [[ $COMPREPLY == *, ]] && compopt -o nospace
 }
-
+_smartctl_drivedb()
+{
+    local prefix=
+    if [[ $cur == +* ]] ; then
+        prefix=+
+        cur="${cur#+}"
+    fi
+    _filedir h
+    [[ -n $prefix ]] && COMPREPLY=( "${COMPREPLY[@]/#/$prefix}" )
+}
 
 _smartctl()
 {
-    local cur prev split=false
-
-    COMPREPLY=()
-    _get_comp_words_by_ref cur prev
-
-    _split_longopt && split=true
+    local cur prev words cword split
+    _init_completion -s || return
 
     case $prev in
         -q|--quietmode)
@@ -77,70 +100,69 @@ _smartctl()
             ;;
         -d|--device)
             _smartctl_device
-            return 0
+            return
             ;;
-        -t|--tolerance)
+        -T|--tolerance)
             _smartctl_tolerance
-            return 0
+            return
             ;;
         -b|--badsum)
             _smartctl_badsum
-            return 0
+            return
             ;;
         -r|--report)
             _smartctl_report
-            return 0
+            return
             ;;
         -n|--nocheck)
             _smartctl_powermode
-            return 0
+            return
             ;;
         -s|--smart|-o|--offlineauto|-S|--saveauto)
             _smartctl_feature
-            return 0
+            return
             ;;
         -l|--log)
             _smartctl_log
-            return 0
+            return
             ;;
         -v|--vendorattribute)
             _smartctl_vendorattribute
-            return 0
+            return
             ;;
         -F|--firmwarebug)
             _smartctl_firmwarebug
-            return 0
+            return
             ;;
         -P|--presets)
             _smartctl_presets
-            return 0
+            return
+            ;;
+        -B|--drivedb)
+            _smartctl_drivedb
+            return
             ;;
         -t|--test)
             _smartctl_test
-            return 0
+            return
             ;;
     esac
 
-    $split && return 0
+    $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '--help --version --info --all --quietmode \
-            --device --tolerance --badsum --report --nocheck --smart \
-            --offlineauto --saveauto --health --capabilities --attributes \
-            --log --vendorattribute --firmwarebug --presets --test --captive \
-            --abort' -- "$cur" ) )
+        COMPREPLY=( $( compgen -W '--help --version --info --all --xall
+            --scan --scan-open --quietmode= --device= --tolerance= --badsum=
+            --report= --nocheck= --smart= --offlineauto= --saveauto= --health
+            --capabilities --attributes --log= --vendorattribute=
+            --firmwarebug= --presets= --drivedb= --test= --captive --abort' \
+                -- "$cur" ) )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
     else
         cur=${cur:=/dev/}
         _filedir
     fi
-}
+} &&
 complete -F _smartctl smartctl
-}
 
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: filetype=sh

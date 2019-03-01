@@ -1,31 +1,56 @@
-# bash completion for info
+# bash completion for info                                 -*- shell-script -*-
 
-have info &&
 _info()
 {
-    local cur i infopath
+    local cur prev words cword split
+    _init_completion -s || return
 
-    COMPREPLY=()
-    _get_comp_words_by_ref cur
-
-    _expand || return 0
-
-    # default completion if parameter contains /
-    if [[ "$cur" == */* ]]; then
+    # default completion if parameter looks like a path
+    if [[ "$cur" == @(*/|[.~])* ]]; then
         _filedir
-        return 0
+        return
     fi
 
-    infopath='/usr/share/info'
+    case $prev in
+        -k|--apropos|--index-search|-n|--node|-h|--help|-v|--version)
+            return
+            ;;
+        -d)
+            if [[ ${1##*/} == info ]]; then
+                _filedir -d
+                return
+            fi
+            ;;
+        --directory)
+            _filedir -d
+            return
+            ;;
+        --dribble|-f|--file|-o|--output|--restore|-r|--raw-filename|--rcfile)
+            _filedir
+            return
+            ;;
+    esac
 
-    if [ "${INFOPATH: -1:1}" == ':' ]; then
+    $split && return
+
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
+        return
+    fi
+
+    local i infopath=/usr/share/info
+
+    if [[ $INFOPATH == *: ]]; then
         infopath=${INFOPATH}${infopath}
-    elif [ ${INFOPATH:+set} ]; then
+    elif [[ ${INFOPATH:+set} ]]; then
         infopath=$INFOPATH
     fi
 
+    _expand || return
+
     infopath=$infopath:
-    if [ -n "$cur" ]; then
+    if [[ -n $cur ]]; then
         infopath="${infopath//://$cur* }"
     else
         infopath="${infopath//:// }"
@@ -37,22 +62,13 @@ _info()
     COMPREPLY=( ${COMPREPLY[@]##*/?(:)} )
     # weed out info dir file
     for (( i=0 ; i < ${#COMPREPLY[@]} ; ++i )); do
-        if [ "${COMPREPLY[$i]}" == 'dir' ]; then
-            unset COMPREPLY[$i];
-        fi;
+        [[ ${COMPREPLY[$i]} == dir ]] && unset "COMPREPLY[$i]"
     done
     # strip suffix from info pages
     COMPREPLY=( ${COMPREPLY[@]%.@(gz|bz2|xz|lzma)} )
     COMPREPLY=( $( compgen -W '${COMPREPLY[@]%.*}' -- "${cur//\\\\/}" ) )
 
-    return 0
 } &&
-complete -F _info info
+complete -F _info info pinfo
 
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: filetype=sh

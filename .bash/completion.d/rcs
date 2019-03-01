@@ -1,20 +1,19 @@
-# bash completion for rcs
+# bash completion for rcs                                  -*- shell-script -*-
 
-have rcs &&
 _rcs()
 {
-    local cur prev file dir i
+    local cur prev words cword
+    _init_completion || return
 
-    COMPREPLY=()
-    _get_comp_words_by_ref cur prev
+    local file dir i
 
     file=${cur##*/}
     dir=${cur%/*}
 
     # deal with relative directory
-    [ "$file" = "$dir" ] && dir=.
+    [[ $file == $dir ]] && dir=.
 
-    COMPREPLY=( $( compgen -f "$dir/RCS/$file" ) )
+    COMPREPLY=( $( compgen -f -- "$dir/RCS/$file" ) )
 
     for (( i=0; i < ${#COMPREPLY[@]}; i++ )); do
         file=${COMPREPLY[$i]##*/}
@@ -22,7 +21,7 @@ _rcs()
         COMPREPLY[$i]=$dir$file
     done
 
-    COMPREPLY=( "${COMPREPLY[@]}" $( compgen -G "$dir/$file*,v" ) )
+    COMPREPLY+=( $( compgen -G "$dir/$file*,v" ) )
 
     for (( i=0; i < ${#COMPREPLY[@]}; i++ )); do
         COMPREPLY[$i]=${COMPREPLY[$i]%,v}
@@ -34,10 +33,4 @@ _rcs()
 } &&
 complete -F _rcs ci co rlog rcs rcsdiff
 
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: filetype=sh

@@ -1,36 +1,40 @@
-# wtf completion
+# wtf completion                                           -*- shell-script -*-
 # Raphael Droz, 25/09/2009
 
-have wtf &&
 _wtf()
 {
-    local cur prev db
+    local cur prev words cword addf
+    _init_completion || return
 
-    COMPREPLY=()
-    _get_comp_words_by_ref cur prev
+    [[ $prev == -f ]] && _filedir && return
+    [[ ${words[@]} == *\ -f* ]] && addf= || addf=-f
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $addf )
+        return
+    fi
 
-    [ "$prev" = -f ] && _filedir && return 0
-    [[ "$cur" == -* ]] && COMPREPLY=( -f ) && return 0
+    local db
 
-    set -- "${COMP_WORDS[@]}"
-    while [ $# -gt 0 ]; do
-        if [ "$1" = -f ]; then
+    set -- "${words[@]}"
+    while [[ $# -gt 0 ]]; do
+        if [[ $1 == -f ]]; then
             shift ; db=$1 ; break
         fi
         shift
     done
-    [ -z $db ] && db=${ACRONYMDB:-/usr/share/misc/acronyms*}
 
-    [ ${BASH_VERSINFO[0]} -ge 4 ] && cur="${cur^^}"
+    if [[ -z "$db" ]]; then
+        local f
+        for f in "$ACRONYMDB" /usr/share/misc/acronyms \
+            /usr/share/games/bsdgames/acronyms; do
+            [[ -f "$f" ]] && db="$f" && break
+        done
+        [[ -z "$db" ]] && return
+    fi
 
-    COMPREPLY=( $( compgen -W "$( cut -f 1 -s $db ) -f" -- "${cur}" ) )
+    COMPREPLY=( $( compgen -W "$( cut -f 1 -s $db* 2>/dev/null ) $addf" \
+        -- "${cur^^}" ) )
 } &&
 complete -F _wtf wtf
 
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: filetype=sh

@@ -1,48 +1,67 @@
-# man(1) completion
+# man(1) completion                                        -*- shell-script -*-
 
-[ $USERLAND = GNU -o $UNAME = Darwin \
-  -o $UNAME = FreeBSD -o $UNAME = SunOS -o $UNAME = Cygwin \
-  -o $UNAME = OpenBSD ] &&
 _man()
 {
-    local cur i prev sect manpath manext mansect uname
+    local cur prev words cword split
+    _init_completion -s -n : || return
 
-    manext="@([0-9lnp]|[0-9][px]|man|3pm)?(.@([gx]z|bz2|lzma|Z))"
-    mansect="@([0-9lnp]|[0-9][px]|3pm)"
+    local comprsuffix=".@([glx]z|bz2|lzma|Z)"
+    local manext="@([0-9lnp]|[0-9][px]|man|3?(gl|pm))?($comprsuffix)"
+    local mansect="@([0-9lnp]|[0-9][px]|3?(gl|pm))"
 
-    COMPREPLY=()
-    _get_comp_words_by_ref -n : cur prev
+    case $prev in
+        -C|--config-file)
+            _filedir conf
+            return
+            ;;
+        -l|--local-file)
+            _filedir "$manext"
+            return
+            ;;
+        -M|--manpath)
+            _filedir -d
+            return
+            ;;
+        -P|--pager)
+            compopt -o filenames
+            COMPREPLY=( $( compgen -c -- "$cur" ) )
+            return
+            ;;
+        -p|--preprocessor)
+            COMPREPLY=( $( compgen -W 'e p t g r v' -- "$cur" ) )
+            return
+            ;;
+        -L|--locale|-m|--systems|-e|--extension|-r|--prompt|-R|--recode|\
+        -E|--encoding)
+            return
+            ;;
+    esac
 
-    if [[ "$prev" == -l ]]; then
-        _filedir $manext
-        return 0
+    $split && return
+
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $( compgen -W '$( _parse_help "$1" -h )' -- "$cur" ) )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
+        return
     fi
 
-    _expand || return 0
-
-    # file based completion if parameter contains /
-    if [[ "$cur" == */* ]]; then
-        _filedir $manext
-        return 0
+    # file based completion if parameter looks like a path
+    if [[ "$cur" == @(*/|[.~])* ]]; then
+        _filedir "$manext"
+        return
     fi
 
-    uname=$( uname -s )
-    if [[ $uname == @(Linux|GNU|GNU/*|FreeBSD|Cygwin|CYGWIN_*) ]]; then
-        manpath=$( manpath 2>/dev/null || command man --path )
-    else
-        manpath=$MANPATH
-    fi
-
-    if [ -z "$manpath" ]; then
-        COMPREPLY=( $( compgen -c -- "$cur" ) )
-        return 0
-    fi
+    local manpath=$( manpath 2>/dev/null || command man -w 2>/dev/null )
+    [[ -z $manpath ]] && manpath="/usr/share/man:/usr/local/share/man"
 
     # determine manual section to search
+    local sect
     [[ "$prev" == $mansect ]] && sect=$prev || sect='*'
 
+    _expand || return
+
     manpath=$manpath:
-    if [ -n "$cur" ]; then
+    if [[ -n $cur ]]; then
         manpath="${manpath//://*man$sect/$cur* } ${manpath//://*cat$sect/$cur* }"
     else
         manpath="${manpath//://*man$sect/ } ${manpath//://*cat$sect/ }"
@@ -53,28 +72,21 @@ _man()
     # weed out directory path names and paths to man pages
     COMPREPLY=( ${COMPREPLY[@]##*/?(:)} )
     # strip suffix from man pages
-    COMPREPLY=( ${COMPREPLY[@]%.@([gx]z|bz2|lzma|Z)} )
+    COMPREPLY=( ${COMPREPLY[@]%$comprsuffix} )
     COMPREPLY=( $( compgen -W '${COMPREPLY[@]%.*}' -- "${cur//\\\\/}" ) )
 
     if [[ "$prev" != $mansect ]]; then
         # File based completion for the rest, prepending ./ if needed
         # (man 1.6f needs that for man pages in current dir)
-        local start=${#COMPREPLY[@]}
-        _filedir $manext
+        local i start=${#COMPREPLY[@]}
+        _filedir "$manext"
         for (( i=$start; i < ${#COMPREPLY[@]}; i++ )); do
             [[ ${COMPREPLY[i]} == */* ]] || COMPREPLY[i]=./${COMPREPLY[i]}
         done
     fi
 
     __ltrim_colon_completions "$cur"
-    return 0
 } &&
 complete -F _man man apropos whatis
 
-# Local variables:
-# mode: shell-script
-# sh-basic-offset: 4
-# sh-indent-comment: t
-# indent-tabs-mode: nil
-# End:
-# ex: ts=4 sw=4 et filetype=sh
+# ex: filetype=sh
