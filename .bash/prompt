@@ -49,12 +49,12 @@ export BOLD
 export RESET
 
 function parse_git_dirty() {
-	[[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+	[ -n "$(git status --porcelain)" ] && echo "*"
 }
 
 function parse_git_branch() {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+	git symbolic-ref HEAD | sed -e "s/^refs\/heads\///"
 }
 
-export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\n$(basename ${VIRTUAL_ENV:-''})\$ \[$RESET\]"
+export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\$(parse_git_dirty)\[$WHITE\]\n$(basename ${VIRTUAL_ENV:-''})\$ \[$RESET\]"
 export PS2="\[$ORANGE\]→ \[$RESET\]"
