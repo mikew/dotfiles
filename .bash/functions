@@ -240,19 +240,17 @@ git_clean_all () {
 }
 
 git_reset_file () {
-  local filename=$1
-  echo $filename
-  git reset HEAD $filename
-  git checkout -- $filename
+  local filename="$1"
+  git reset HEAD "$filename"
+  git checkout -- "$filename"
 }
 
 gcl () {
-  local filename=$1
-  echo "'$filename'"
-  if [[ -n $filename ]]; then
+  local filename="$1"
+  if [[ -n "$filename" ]]; then
     git_clean_all
   else
-    git_reset_file $filename
+    git_reset_file "$filename"
   fi
 }
 
