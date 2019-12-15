@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+use_nvm() {
+  nvm_script_path="/usr/local/opt/nvm/nvm.sh"
+
+  if [ ! -e "$nvm_script_path" ]; then
+    echo "Could not find nvm.sh"
+    return
+  fi
+
+  export NVM_DIR="$HOME/.nvm"
+  source "$nvm_script_path"
+
+  nvmrc="$(nvm_find_nvmrc)"
+
+  if [ -z "$nvmrc" ]; then
+    echo "Could not find nvmrc"
+    nvm unload || true
+    return
+  fi
+
+  nvm use --silent
+}
