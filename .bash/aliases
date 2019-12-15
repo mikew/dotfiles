@@ -30,6 +30,7 @@ alias gci='git commit'
 alias gco='git checkout'
 alias gst='git status'
 alias gdi='git diff'
+alias gfa='git fetch --all'
 
 # git pendantic
 alias gs='gst'
