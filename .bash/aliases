@@ -128,6 +128,7 @@ alias map="xargs -n1"
 # Grep with context
 alias grepc="grep -B 3 -A 3"
 
+alias rg="rg --smart-case"
 # One of @janmoesen’s ProTip™s
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
 	alias "$method"="lwp-request -m '$method'"
