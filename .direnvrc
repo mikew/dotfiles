@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export NODE_VERSIONS="$HOME/.nvm/versions/node"
+export NODE_VERSION_PREFIX="v"
+
 use_nvm() {
   nvm_script_path="/usr/local/opt/nvm/nvm.sh"
 
