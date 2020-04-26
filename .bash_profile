@@ -1,17 +1,31 @@
-export PATH="$HOME/bin:$PATH"
+function try-source() {
+  if [ -r "$1" ]; then
+    source "$1"
+  fi
+}
 
-# Load the shell dotfiles, and then some:
-# * ~/.path can be used to extend `$PATH`.
-#for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
-for file in ~/.{path,bash/exports,bash/aliases,bash/functions,bash/completion,bash/prompt,bash/rbenv}; do
-  [ -r "$file" ] && source "$file"
+sources=(
+  .path
+  .bash/locale
+  .bash/bash_settings
+  .bash/cli
+  .bash/completion
+  .bash/git
+  .bash/navigation
+  .bash/network
+  .bash/prompt
+  .bash/ruby
+)
+
+for file in "${sources[@]}"; do
+  try-source "$file"
 done
 unset file
 
 if [[ $OSTYPE == darwin* ]] ; then
-  source ~/.osx/exports
-  source ~/.osx/aliases
-  source ~/.osx/functions
+  try-source ~/.bash/osx
 fi
 
-[ -f ~/.localrc ] && source ~/.localrc
+if [ -f ~/.localrc ]; then
+  source ~/.localrc
+fi

@@ -1,0 +1,17 @@
+# bundler helper
+alias passenger='be passenger'
+alias rails='be rails'
+alias rake='be rake'
+alias rspec='be rspec'
+alias unicorn='be unicorn'
+
+# bundler helper
+function be {
+  if [[ -a Gemfile ]]; then
+    bundle exec $*
+  else
+    command $*
+  fi
+}
+
+# vim: ft=sh

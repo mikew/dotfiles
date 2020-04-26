@@ -58,3 +58,5 @@ function parse_git_branch() {
 
 export PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\$(parse_git_dirty)\[$WHITE\]\n$(basename ${VIRTUAL_ENV:-''})\$ \[$RESET\]"
 export PS2="\[$ORANGE\]→ \[$RESET\]"
+
+# vim: ft=sh
