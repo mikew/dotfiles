@@ -27,6 +27,4 @@ if [[ $OSTYPE == darwin* ]] ; then
   try-source ~/.zsh/osx
 fi
 
-if [ -f ~/.localrc ]; then
-  source ~/.localrc
-fi
+try-source ~/.localrc

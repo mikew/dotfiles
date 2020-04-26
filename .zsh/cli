@@ -1,5 +1,5 @@
-# easy bash_profile sourcing
-alias reload='source ~/.bash_profile'
+# easy shell profile sourcing
+alias reload='source ~/.zprofile'
 
 # look for process
 alias psgrep="ps aux | grep -v grep | grep -i"
