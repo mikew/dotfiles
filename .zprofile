@@ -5,17 +5,17 @@ function try-source() {
 }
 
 sources=(
-  .path
-  .zsh/locale
-  .zsh/zsh_settings
-  .zsh/readline_navigation
-  .zsh/cli
-  .zsh/completion
-  .zsh/git
-  .zsh/navigation
-  .zsh/network
-  .zsh/prompt
-  .zsh/ruby
+  ~/.path
+  ~/.zsh/locale
+  ~/.zsh/zsh_settings
+  ~/.zsh/readline_navigation
+  ~/.zsh/cli
+  ~/.zsh/completion
+  ~/.zsh/git
+  ~/.zsh/navigation
+  ~/.zsh/network
+  ~/.zsh/prompt
+  ~/.zsh/ruby
 )
 
 for file in "${sources[@]}"; do
