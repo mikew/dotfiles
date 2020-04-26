@@ -45,9 +45,7 @@ list-dotfiles () {
     -not -name resync.sh \
     -not -name install.sh \
     -not -name '*.swp' \
-    -not -name '*~' \
-    -not -name recover-submodules.sh
+    -not -name '*~'
 }
 
 main "$@"
-#list-dotfiles
