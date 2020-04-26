@@ -1,0 +1,6 @@
+export HISTSIZE=32768
+export HISTORY_IGNORE="(ls|cd|cd -|pwd|exit|date)"
+export HISTFILE="$HOME/.zsh_history"
+setopt histignoredups
+
+# vim: ft=zsh

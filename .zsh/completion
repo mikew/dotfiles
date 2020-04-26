@@ -1,0 +1,16 @@
+autoload -U compinit
+compinit
+
+# For autocompletion with an arrow-key driven interface
+# To activate the menu, press Tab twice.
+zstyle ':completion:*' menu select
+
+# For autocompletion of command line switches for aliases
+setopt COMPLETE_ALIASES
+
+# This tells zsh that small letters will match small and capital letters. (i.e.
+# capital letters match only capital letters.)
+# https://superuser.com/a/1092328
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# vim: ft=zsh
