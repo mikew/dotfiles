@@ -2,17 +2,6 @@
 # Shamelessly copied from https://github.com/gf3/dotfiles
 # Screenshot: http://i.imgur.com/s0Blh.png
 
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-	export TERM=gnome-256color
-elif infocmp xterm-256color >/dev/null 2>&1; then
-	export TERM=xterm-256color
-fi
-
-# Because we set TERM above, it overrides `default-terminal` in tmux.conf
-if [[ -n "$TMUX" ]]; then
-  export TERM="screen-256color"
-fi
-
 if tput setaf 1 &> /dev/null; then
 	tput sgr0
 	if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
