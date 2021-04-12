@@ -26,4 +26,8 @@ if [[ $OSTYPE == darwin* ]] ; then
   try-source ~/.bash/osx
 fi
 
+if [ -n "$ITERM_PROFILE" ]; then
+  try-source ~/.bash/iterm2_shell_integration
+fi
+
 try-source ~/.localrc
