@@ -37,4 +37,13 @@ gcl () {
   fi
 }
 
+git-new-branch() {
+  git stash
+  git checkout master
+  git fetch --all
+  git pull origin master
+  git checkout -b "new-branch-$(date +%s)"
+  git stash apply
+}
+
 # vim: ft=sh
