@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function try-source() {
   if [ -r "$1" ]; then
     source "$1"
