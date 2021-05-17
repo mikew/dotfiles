@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function try-source() {
   if [ -r "$1" ]; then
     source "$1"
@@ -24,6 +26,10 @@ unset file
 
 if [[ $OSTYPE == darwin* ]] ; then
   try-source ~/.bash/osx
+fi
+
+if [ -n "$ITERM_PROFILE" ]; then
+  try-source ~/.bash/iterm2_shell_integration
 fi
 
 try-source ~/.localrc
