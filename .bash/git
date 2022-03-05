@@ -38,12 +38,30 @@ gcl () {
 }
 
 git-new-branch() {
+  # Grab branch name from arguments. If it's empty, default to something unique.
+  local branch_name="$1"
+  if [ -z "$branch_name" ]; then
+    branch_name="new-branch-$(date +%s)"
+  fi
+
+  # Try to stash any changes, and track if anything was actually stashed so we
+  # only call `stash apply` when needed.
+  local did_stash=""
+  local old_stash=$(git rev-parse -q --verify refs/stash)
   git stash
-  git checkout master
+  local new_stash=$(git rev-parse -q --verify refs/stash)
+  if [ "$old_stash" != "$new_stash" ]; then
+    did_stash="yes"
+  fi
+
+  git checkout master || git checkout main
   git fetch --all
-  git pull origin master
-  git checkout -b "new-branch-$(date +%s)"
-  git stash apply
+  git pull origin master || git pull origin main
+  git checkout -b "$branch_name"
+
+  if [ -n "$did_stash" ]; then
+    git stash apply
+  fi
 }
 
 # vim: ft=sh
