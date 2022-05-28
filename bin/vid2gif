@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html
+
+_convert() {
+  palette="$(mktemp).png"
+  fps="15"
+  # width="800"
+  width="500"
+  dither="dither=bayer:bayer_scale=3"
+  filters="fps=$fps,scale=$width:-1:flags=lanczos"
+  output="$1.gif"
+
+  export PATH="$HOME/Downloads:$PATH"
+
+  ffmpeg -i "$1" -vf "$filters,palettegen=stats_mode=diff" -y "$palette"
+  ffmpeg -i "$1" -i "$palette" -lavfi "$filters [x]; [x][1:v] paletteuse=$dither" -y "$output"
+
+  rm "$palette"
+}
+
+for f in "$@"; do
+  _convert "$f"
+done

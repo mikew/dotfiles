@@ -1,0 +1,12 @@
+#!/bin/sh
+
+export PATH="$HOME/Downloads:$PATH"
+
+_convert() {
+  output="$1.mp4"
+  ffmpeg -i "$1" -vcodec h264 -acodec copy "$output"
+}
+
+for f in "$@"; do
+  _convert "$f"
+done
