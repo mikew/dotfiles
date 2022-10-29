@@ -6,15 +6,30 @@ function try-source() {
 
 sources=(
   ~/.path
+
+  ~/.bash/locale
   ~/.zsh/locale
+
   ~/.zsh/zsh_settings
   ~/.zsh/readline_navigation
+
+  ~/.bash/cli
   ~/.zsh/cli
+
   ~/.zsh/completion
+
+  ~/.bash/git
   ~/.zsh/git
+
+  ~/.bash/navigation
   ~/.zsh/navigation
+
+  ~/.bash/network
   ~/.zsh/network
+
   ~/.zsh/prompt
+
+  ~/.bash/ruby
   ~/.zsh/ruby
 )
 
@@ -24,6 +39,7 @@ done
 unset file
 
 if [[ $OSTYPE == darwin* ]] ; then
+  try-source ~/.bash/osx
   try-source ~/.zsh/osx
 fi
 

@@ -13,7 +13,7 @@ alias .....="cd ../../../.."
 
 # Create a new directory and enter it
 function mkd() {
-	mkdir -p "$@" && cd "$@"
+	mkdir -p "$@" && cd "$@" || return
 }
 
 # vim: ft=sh
