@@ -1,6 +1,17 @@
 export HISTSIZE=32768
 export HISTORY_IGNORE="(ls|cd|cd -|pwd|exit|date)"
 export HISTFILE="$HOME/.zsh_history"
-setopt histignoredups
+
+# Disable Terminal.app history / sessions.
+export SHELL_SESSIONS_DISABLE=1
+
+# TODO Are all these needed?
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+# setopt SHARE_HISTORY
 
 # vim: ft=zsh
