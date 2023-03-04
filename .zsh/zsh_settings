@@ -1,6 +1,7 @@
 export HISTSIZE=32768
 export HISTORY_IGNORE="(ls|cd|cd -|pwd|exit|date)"
 export HISTFILE="$HOME/.zsh_history"
+export SAVEHIST=32768
 
 # Disable Terminal.app history / sessions.
 export SHELL_SESSIONS_DISABLE=1
@@ -12,6 +13,8 @@ setopt HIST_SAVE_NO_DUPS
 
 setopt APPEND_HISTORY
 setopt INC_APPEND_HISTORY
-# setopt SHARE_HISTORY
+setopt SHARE_HISTORY
+
+setopt EXTENDED_HISTORY
 
 # vim: ft=zsh
