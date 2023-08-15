@@ -3,6 +3,9 @@ alias reload='source ~/.bash_profile'
 
 # look for process
 alias psgrep="ps aux | grep -v grep | grep -i"
+function psgrepkill() {
+  awk '{ print $2 }' | xargs kill -KILL
+}
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`

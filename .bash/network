@@ -1,5 +1,5 @@
-alias server="npx serve -p 4000"
-alias server-single="npx serve -p 4000 --single"
+# alias server="npx serve -p 4000"
+# alias server-single="npx serve -p 4000 --single"
 
 # All the dig info
 function digga() {
@@ -21,6 +21,23 @@ ssh-tunnel-port () {
 ssh-proxy () {
   local host="$1"
   ssh -D 8888 "$host"
+}
+
+function server() {
+  # Since some projects use ancient versions of node, simple `npx ...` commands
+  # can fail in unexpected ways. So we actually cd to the tmp folder to use the
+  # system node version.
+
+  dir="$PWD"
+  # https://unix.stackexchange.com/a/174818
+  tmpdir=$(dirname "$(mktemp tmp.XXXXXXXXXX -ut)")
+  cd "$tmpdir" || return
+  npx serve "$@" -p 4000 "$dir"
+  cd - || return
+}
+
+function server-single() {
+  server --single "$@"
 }
 
 # vim: ft=sh
