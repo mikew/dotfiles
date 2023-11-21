@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -ex
+
+BASE_URL="https://devimages-cdn.apple.com/design/resources/download"
+FONT_DMGS=("SF-Pro.dmg" "SF-Compact.dmg" "SF-Mono.dmg" "NY.dmg")
+
+main() {
+  # pkgutil errors if the path you're extracting to exists, so just remove the
+  # staging area.
+  rm -rf /tmp/sf-mono-fonts/install
+
+  # Create the directories needed.
+  mkdir -p \
+    /tmp/sf-mono-fonts \
+    /tmp/sf-mono-fonts/otf \
+    /tmp/sf-mono-fonts/install
+
+  cd /tmp/sf-mono-fonts
+
+  for dmg in "${FONT_DMGS[@]}"; do
+    curl --location --output "${dmg}" "${BASE_URL}/${dmg}"
+
+    hdiutil attach "${dmg}"
+
+    mount_point=$(get-dmg-mount-path "${PWD}/${dmg}")
+
+    pkgutil --expand-full "${mount_point}"/*.pkg "${PWD}/install/${dmg}"
+
+    find "${PWD}/install/${dmg}" -type f -name '*.otf' -exec cp {} otf \;
+
+    hdiutil detach "${mount_point}"
+  done
+
+  open /tmp/sf-mono-fonts/otf
+}
+
+get-dmg-mount-path() {
+  real_path=$(realpath "${1}")
+  hdiutil info -plist | xq -x "//dict/array/dict/key[text() = 'image-path']/following-sibling::string[1][text() = '${real_path}']/../array/dict/key[text() = 'mount-point']/following-sibling::string[1]/text()"
+}
+
+main "$@"
