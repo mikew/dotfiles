@@ -31,9 +31,9 @@ function server() {
   dir="$PWD"
   # https://unix.stackexchange.com/a/174818
   tmpdir=$(dirname "$(mktemp tmp.XXXXXXXXXX -ut)")
-  cd "$tmpdir" || return
+  pushd "$tmpdir" || return
   npx serve "$@" -p 4000 "$dir"
-  cd - || return
+  popd || return
 }
 
 function server-single() {
