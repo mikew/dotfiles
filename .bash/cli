@@ -114,4 +114,8 @@ else
   export EDITOR=vim
 fi
 
+mv-backup() {
+  mv "$1" "$1-$(date +%s)"
+}
+
 # vim: ft=sh
