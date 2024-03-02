@@ -40,4 +40,15 @@ function server-single() {
   server --single "$@"
 }
 
+function source-map-explorer() {
+  full_path=$(realpath "$1")
+
+  # https://unix.stackexchange.com/a/174818
+  tmpdir=$(mktemp -d)
+  pushd "$tmpdir" || return
+  npx source-map-explorer "$full_path" --no-border-checks --html index.html
+  server
+  popd || return
+}
+
 # vim: ft=sh
