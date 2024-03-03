@@ -3,6 +3,9 @@ alias reload='source ~/.bash_profile'
 
 # look for process
 alias psgrep="ps aux | grep -v grep | grep -i"
+function psgrepkill() {
+  awk '{ print $2 }' | xargs kill -KILL
+}
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -83,6 +86,18 @@ if [ $? -eq 0 ]; then
 	}
 fi
 
+diff-strings() {
+  message="Paste a string below, press enter, then press CTRL-D"
+
+  echo "$message"
+  string1=$(cat)
+
+  echo "$message"
+  string2=$(cat)
+
+  diff <(echo "$string1") <(echo "$string2")
+}
+
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
@@ -98,5 +113,9 @@ elif command -v nano > /dev/null 2>&1; then
 else
   export EDITOR=vim
 fi
+
+mv-backup() {
+  mv "$1" "$1-$(date +%s)"
+}
 
 # vim: ft=sh

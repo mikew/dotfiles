@@ -1,2 +1,2 @@
 # easy shell profile sourcing
-alias reload='source ~/.zprofile'
+alias reload='source ~/.zshrc'

@@ -6,6 +6,9 @@ export SAVEHIST=32768
 # Disable Terminal.app history / sessions.
 export SHELL_SESSIONS_DISABLE=1
 
+# Make `time` look more like bash.
+export TIMEFMT=$'real\t%E\nuser\t%U\nsys\t%S\ncpu\t%P'
+
 # TODO Are all these needed?
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_ALL_DUPS
