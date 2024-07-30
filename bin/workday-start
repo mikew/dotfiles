@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+set -ex
+
+wait-for-app() {
+  process_name="$1"
+
+  while true; do
+    if pgrep -f "$process_name"; then
+      break
+    fi
+
+    sleep 0.1
+  done
+
+  sleep 1
+}
+
+hide-app() {
+  app_name="$1"
+  process_name="$2"
+  if [ -z "$process_name" ]; then
+    process_name="$1.app"
+  fi
+
+  wait-for-app "$process_name"
+
+  cat <<-EOF | osascript
+tell application "System Events"
+	set visible of application process "$app_name" to false
+end tell
+EOF
+}
+
+open-app() {
+  # `--hide` _hides_ Mail.app, but it still shows a blank space in Mission
+  # Control.
+  # open --hide --background "$1"
+  open "$1"
+}
+
+# Full path because Homebrew isn't in the path when run via Shortcuts.
+/opt/homebrew/bin/defaultbrowser edgemac
+# https://apple.stackexchange.com/a/255947
+cat <<-EOF | osascript
+try
+  tell application "System Events"
+    tell application process "CoreServicesUIAgent"
+      tell window 1
+        tell (first button whose name starts with "use")
+          perform action "AXPress"
+        end tell
+      end tell
+    end tell
+  end tell
+end try
+EOF
+
+{
+  open-app "/System/Applications/Mail.app"
+  hide-app "Mail" "Mail.app/Contents/MacOS/Mail"
+} &
+
+open-app "/Applications/Microsoft Edge.app"
+wait-for-app "Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
+
+{
+  open-app "/Users/mike/Applications/Edge Apps.localized/PBXX - Zoom.app"
+  hide-app "PBXX - Zoom"
+} &
+
+{
+  open-app "/Users/mike/Applications/Edge Apps.localized/PBXX - Slack.app"
+  hide-app "PBXX - Slack"
+} &
+
+{
+  open-app "/Users/mike/Applications/Edge Apps.localized/PBXX - Calendar.app"
+  hide-app "PBXX - Calendar"
+} &
