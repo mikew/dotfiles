@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -ex
+
+SOCKET_PATH="$1"
+shift
+
+ssh -L "$SOCKET_PATH:$SOCKET_PATH" 10.0.1.99 -N &
+sleep 10
+
+neovide --server "$SOCKET_PATH" -- "$@"
