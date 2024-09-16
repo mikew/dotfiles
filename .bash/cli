@@ -82,7 +82,7 @@ alias rg="rg --smart-case"
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
 	function diff() {
-		git diff --no-index --color-words "$@"
+		git diff --no-index --word-diff=color "$@"
 	}
 fi
 
@@ -113,5 +113,9 @@ elif command -v nano > /dev/null 2>&1; then
 else
   export EDITOR=vim
 fi
+
+mv-backup() {
+  mv "$1" "$1-$(date +%s)"
+}
 
 # vim: ft=sh

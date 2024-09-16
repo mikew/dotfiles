@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -ex
+
+quit-app() {
+  cat <<-EOF | osascript
+quit app "$1"
+EOF
+}
+
+# Full path because Homebrew isn't in the path when run via Shortcuts.
+/opt/homebrew/bin/defaultbrowser safari
+# https://apple.stackexchange.com/a/255947
+cat <<-EOF | osascript
+try
+  tell application "System Events"
+    tell application process "CoreServicesUIAgent"
+      tell window 1
+        tell (first button whose name starts with "use")
+          perform action "AXPress"
+        end tell
+      end tell
+    end tell
+  end tell
+end try
+EOF
+
+quit-app "Mail"
+quit-app "PBXX - Zoom"
+quit-app "PBXX - Slack"
+quit-app "PBXX - Calendar"
