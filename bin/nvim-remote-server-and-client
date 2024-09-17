@@ -12,7 +12,7 @@ UNAME=$(uname -s)
 NVIM_FORCE_OS=linux
 if [ "$UNAME" = "Darwin" ]; then
   NVIM_FORCE_OS=macos
-elif [ "$UNAME" = "Linux" ]; then
+elif [[ "$UNAME" = MINGW* ]]; then
   NVIM_FORCE_OS=linux
 fi
 
