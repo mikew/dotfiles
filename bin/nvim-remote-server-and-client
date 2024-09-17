@@ -8,9 +8,16 @@ shift
 
 SOCKET_PATH="/tmp/nvim-socket-$(date +%s)"
 
-echo "cd '$DIR' && NVIM_FORCE_OS=linux NVIM_FORCE_UI=neovide nvim --headless --listen '$SOCKET_PATH'" | ssh "$SERVER" '$SHELL -i' &
+UNAME=$(uname -s)
+NVIM_FORCE_OS=linux
+if [ "$UNAME" = "Darwin" ]; then
+  NVIM_FORCE_OS=macos
+elif [ "$UNAME" = "Linux" ]; then
+  NVIM_FORCE_OS=linux
+fi
 
-ssh -L "$SOCKET_PATH:$SOCKET_PATH" "$SERVER" -N &
+echo "cd '$DIR' && NVIM_FORCE_OS=$NVIM_FORCE_OS NVIM_FORCE_UI=neovide nvim --headless --listen '$SOCKET_PATH'" | ssh -L "$SOCKET_PATH:$SOCKET_PATH" "$SERVER" '$SHELL -i' &
+
 while true; do
   if [ -S "$SOCKET_PATH" ]; then
     break
@@ -19,5 +26,9 @@ while true; do
   sleep 1
 done
 
-#/Applications/Neovide.app/Contents/MacOS/neovide --server "$SOCKET_PATH" "$@"
-neovide --server "$SOCKET_PATH" "$@"
+NEOVIDE=neovide
+if [ "$UNAME" = "Darwin" ]; then
+  NEOVIDE=/Applications/Neovide.app/Contents/MacOS/neovide
+fi
+
+"$NEOVIDE" --server "$SOCKET_PATH" "$@"
