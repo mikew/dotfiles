@@ -26,6 +26,8 @@ while true; do
   sleep 1
 done
 
+sleep 3
+
 NEOVIDE=neovide
 if [ "$UNAME" = "Darwin" ]; then
   NEOVIDE=/Applications/Neovide.app/Contents/MacOS/neovide
