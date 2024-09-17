@@ -13,7 +13,7 @@ NVIM_FORCE_OS=linux
 if [ "$UNAME" = "Darwin" ]; then
   NVIM_FORCE_OS=macos
 elif [[ "$UNAME" = MINGW* ]]; then
-  NVIM_FORCE_OS=linux
+  NVIM_FORCE_OS=windows
 fi
 
 echo "NVIM_FORCE_OS=$NVIM_FORCE_OS NVIM_FORCE_UI=neovide nvim --headless --listen '$SOCKET_PATH' --cmd 'cd $DIR'" | ssh -L "$SOCKET_PATH:$SOCKET_PATH" "$SERVER" -t '$SHELL -i' &
