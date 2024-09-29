@@ -16,7 +16,7 @@ elif [[ "$UNAME" = MINGW* ]]; then
   NVIM_FORCE_OS=linux
 fi
 
-echo "NVIM_FORCE_OS=$NVIM_FORCE_OS NVIM_FORCE_UI=neovide nvim --headless --listen '$SOCKET_PATH' --cmd 'cd $DIR'" | ssh -L "$SOCKET_PATH:$SOCKET_PATH" "$SERVER" -t '$SHELL -i' &
+echo "NVIM_FORCE_OS=$NVIM_FORCE_OS NVIM_FORCE_UI=nvim-qt nvim --headless --listen '$SOCKET_PATH' --cmd 'cd $DIR'" | ssh -L "$SOCKET_PATH:$SOCKET_PATH" "$SERVER" -t '$SHELL -i' &
 
 while true; do
   if [ -S "$SOCKET_PATH" ]; then
@@ -33,4 +33,5 @@ if [ "$UNAME" = "Darwin" ]; then
   NEOVIDE=/Applications/Neovide.app/Contents/MacOS/neovide
 fi
 
-"$NEOVIDE" --server "$SOCKET_PATH" "$@"
+# "$NEOVIDE" --server "$SOCKET_PATH" "$@"
+nvim-qt --nofork --server "$SOCKET_PATH" -- "$@"
