@@ -75,5 +75,5 @@ wait-for-app "Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
 
 {
   open-app "/Users/mike/Applications/Edge Apps.localized/PBXX - Calendar.app"
-  hide-app "PBXX - Calendar"
+  hide-app "Google Calendar" "PBXX - Calendar"
 } &
