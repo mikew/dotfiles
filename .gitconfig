@@ -24,6 +24,8 @@
   # Interactive rebase with the given number of latest commits
   reb = "!r() { git rebase -i HEAD~$1; }; r"
 
+  puh = push -u origin HEAD
+
 [apply]
   whitespace = fix # Detect whitespace errors when applying a patch
 
