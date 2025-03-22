@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -ex
+
+# claude-3-7-sonnet-20250219
+# claude-3-5-sonnet-20241022
+
+VERSION=0.29
+WORKSPACE_BASE="$PWD"
+SANDBOX_RUNTIME_CONTAINER_IMAGE="docker.all-hands.dev/all-hands-ai/runtime:$VERSION-nikolaik"
+
+DOCKER_ARGS=(
+  -it
+  --rm
+  --pull always
+  --env "SANDBOX_RUNTIME_CONTAINER_IMAGE=$SANDBOX_RUNTIME_CONTAINER_IMAGE"
+  --env LOG_ALL_EVENTS=true
+  --volume /var/run/docker.sock:/var/run/docker.sock
+  --volume ~/.openhands-state:/.openhands-state
+  --publish 6060:3000
+  --add-host host.docker.internal:host-gateway
+
+  --env "SANDBOX_USER_ID=$(id -u)"
+  --env "WORKSPACE_MOUNT_PATH=$WORKSPACE_BASE"
+  #--env "WORKSPACE_MOUNT_PATH=/opt/workspace_base"
+  --volume "$PWD:/opt/workspace_base"
+
+  "docker.all-hands.dev/all-hands-ai/openhands:$VERSION"
+)
+
+docker pull "$SANDBOX_RUNTIME_CONTAINER_IMAGE"
+
+docker run "${DOCKER_ARGS[@]}"
