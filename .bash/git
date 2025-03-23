@@ -1,33 +1,62 @@
-# git
+# Common Git command shortcuts
+# These aliases provide shorter versions of frequently used git commands
+
+# Basic git shortcut
 alias g="git"
+
+# Create a new commit
 alias gci='git commit'
+
+# Switch branches or restore files
 alias gco='git checkout'
+
+# Show working tree status
 alias gst='git status'
+
+# Show changes between commits, commit and working tree, etc
 alias gdi='git diff'
+
+# Fetch all remotes
 alias gfa='git fetch --all'
 
-# git pendantic
+# Alternative aliases for common typos or preferences
+# Alternative to 'git status'
 alias gs='gst'
+
+# Alternative to 'git diff'
 alias gd='gdi'
 
-# Git commit message, an alias won't do
+# Create a commit with a message
+# Usage: gcm "your commit message here"
+# Note: Accepts multiple words without quotes
 gcm () {
   local message=$*
   git commit --message "$message"
 }
 
-# Git clean WARNING!
+# DANGEROUS: Reset and clean working directory
+# This will remove all untracked files and directories
+# and reset all tracked files to their HEAD state
 git_clean_all () {
   git_reset_file .
+  # Remove untracked files (-f) and directories (-d)
   git clean -df .
 }
 
+# Reset a specific file to HEAD and discard changes
+# Usage: git_reset_file path/to/file
 git_reset_file () {
   local filename="$1"
+  # Unstage the file
   git reset HEAD "$filename"
+  # Discard changes in working directory
   git checkout -- "$filename"
 }
 
+# Clean/reset files in working directory
+# Usage: 
+#   gcl               - Reset and clean everything (DANGEROUS!)
+#   gcl path/to/file  - Reset specific file to HEAD
 gcl () {
   local filename="$1"
   if [[ -n "$filename" ]]; then
@@ -37,15 +66,23 @@ gcl () {
   fi
 }
 
+# Create a new branch from updated master/main
+# Usage: 
+#   git-new-branch branch-name  - Create new branch with specified name
+#   git-new-branch             - Create new branch with timestamp-based name
+# Features:
+#   - Automatically stashes changes if needed
+#   - Updates master/main branch
+#   - Creates new branch from updated base
 git-new-branch() {
-  # Grab branch name from arguments. If it's empty, default to something unique.
+  # Use provided branch name or generate timestamped one
   local branch_name="$1"
   if [ -z "$branch_name" ]; then
     branch_name="new-branch-$(date +%s)"
   fi
 
-  # Try to stash any changes, and track if anything was actually stashed so we
-  # only call `stash apply` when needed.
+  # Stash management: Save current changes if any
+  # Track if we actually stashed anything to restore later
   local did_stash=""
   local old_stash=$(git rev-parse -q --verify refs/stash)
   git stash
@@ -54,11 +91,13 @@ git-new-branch() {
     did_stash="yes"
   fi
 
+  # Update base branch (master or main) and create new branch
   git checkout master || git checkout main
   git fetch --all
   git pull origin master || git pull origin main
   git checkout -b "$branch_name"
 
+  # Restore stashed changes if we stashed anything
   if [ -n "$did_stash" ]; then
     git stash apply
   fi
