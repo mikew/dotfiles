@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+_convert() {
+  output="$1.webm"
+  ffmpeg -i "$1" -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis "$output"
+}
+
+for f in "$@"; do
+  _convert "$f"
+done
