@@ -1,0 +1,22 @@
+font-thicken = true
+
+font-family = Iosevka Custom Slab Terminal
+font-family-bold = Iosevka Custom Terminal Bold
+font-family-italic = Iosevka Custom Terminal Oblique
+font-family-bold-italic = Iosevka Custom Terminal Bold Oblique
+
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+font-size = 14
+
+theme = Oceanic-Next
+
+window-width = 120
+window-height = 40
+
+macos-option-as-alt = true
+bold-is-bright = true
+
+term = xterm-256color
