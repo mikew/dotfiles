@@ -1,3 +1,19 @@
+ZSH_FUNCTION_DIRS=(
+  "/usr/local/share/zsh/site-functions"
+
+  # Homebrew
+  "/opt/homebrew/share/zsh/site-functions"
+  "/home/linuxbrew/.linuxbrew/share/zsh/site-functions"
+
+  "$HOME/.zsh/site-functions"
+)
+
+for dir in $ZSH_FUNCTION_DIRS; do
+  if [[ -d $dir && ${fpath[(Ie)$dir]} -eq 0 ]]; then
+    fpath+=($dir)
+  fi
+done
+
 autoload -Uz compinit
 compinit
 
