@@ -77,3 +77,5 @@ wait-for-app "Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
   open-app "/Users/mike/Applications/Edge Apps.localized/PBXX - Calendar.app"
   hide-app "Google Calendar" "PBXX - Calendar"
 } &
+
+sudo rm -rf /Applications/zoom.us.app/Contents/MacOS/zoom.us

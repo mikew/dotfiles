@@ -112,3 +112,5 @@
 	helper = store
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main
