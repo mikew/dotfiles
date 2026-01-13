@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# set -e
+#
+# if command -v mise &> /dev/null; then
+#   exec mise exec --cd ~ -- "$@"
+# else
+#   exec "$@"
+# fi
+
+set -e
+
+TOOL_NAME="$1"
+shift
+
+if command -v mise &> /dev/null; then
+  if mise which --cd ~ "$TOOL_NAME" &> /dev/null; then
+    exec mise exec --cd ~ -- "$TOOL_NAME" "$@"
+  fi
+fi
+
+exec "$TOOL_NAME" "$@"
