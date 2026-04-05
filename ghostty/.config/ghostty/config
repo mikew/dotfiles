@@ -1,9 +1,9 @@
 font-thicken = true
 
-font-family = Iosevka Custom Slab Terminal
-font-family-bold = Iosevka Custom Terminal Bold
-font-family-italic = Iosevka Custom Terminal Oblique
-font-family-bold-italic = Iosevka Custom Terminal Bold Oblique
+font-family = Iosevka Custom Slab
+font-family-bold = Iosevka Custom Slab Bold
+font-family-italic = Iosevka Custom Slab Oblique
+font-family-bold-italic = Iosevka Custom Slab Bold Oblique
 
 font-feature = -calt
 font-feature = -liga
