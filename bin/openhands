@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+mise-global-tool uvx --python 3.12 openhands "$@"
