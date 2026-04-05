@@ -1,0 +1,38 @@
+default:
+  ssh-path: internal
+  #insecure-direct-connect: true
+  server-env:
+    - NVIM_FORCE_OS=macos
+    - NVIM_FORCE_UI=nvim-qt
+    #- NVIM_FORCE_UI=neovide
+  local-editor:
+    - nvim-qt
+    - --nofork
+    - --server
+    - "{{SOCKET_PATH}}"
+  # local-editor:
+  #   - /Applications/Neovide.app/Contents/MacOS/neovide
+  #   - --neovim-bin
+  #   - /opt/homebrew/bin/nvim
+  #   - --server
+  #   - "{{SOCKET_PATH}}"
+  #   - --no-fork
+
+servers:
+  nvrh-test-linux:
+    use-nvim-embed: true
+    nvim-cmd:
+      # - /home/linuxbrew/.linuxbrew/bin/nvim
+      - /home/mike/Work/neovim/nvim-dev
+
+  vscode-remote-via-maury:
+    ssh-path: binary
+    nvim-cmd:
+      - /home/linuxbrew/.linuxbrew/bin/nvim
+
+  nvrh-test-windows:
+    nvim-cmd:
+      - mise
+      - exec
+      - --
+      - nvim
