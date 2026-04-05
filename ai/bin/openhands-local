@@ -37,4 +37,4 @@ docker pull "$SANDBOX_RUNTIME_CONTAINER_IMAGE"
 
 echo "Access via http://localhost:$PORT"
 
-docker run "${DOCKER_ARGS[@]}"
+exec docker run "${DOCKER_ARGS[@]}"

@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-set -ex
 
-mise-global-tool npx opencode-ai@latest "$@"
+exec mise-global-tool npx opencode-ai@latest "$@"
