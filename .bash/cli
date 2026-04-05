@@ -125,4 +125,8 @@ mv-backup() {
   mv "$1" "$1-$(date +%s)"
 }
 
+unix2humantime() {
+  date --date="@$1"
+}
+
 # vim: ft=sh
