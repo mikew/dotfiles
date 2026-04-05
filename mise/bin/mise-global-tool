@@ -14,7 +14,8 @@ shift
 
 if command -v mise &> /dev/null; then
   if mise which --cd ~ "$TOOL_NAME" &> /dev/null; then
-    exec mise exec --cd ~ -- "$TOOL_NAME" "$@"
+    ORIG_PWD="$PWD"
+    exec mise exec --cd ~ -- "$SHELL" -c 'cd "$1" && shift && exec "$@"' _ "$ORIG_PWD" "$TOOL_NAME" "$@"
   fi
 fi
 

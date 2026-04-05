@@ -20,3 +20,7 @@ macos-option-as-alt = true
 bold-is-bright = true
 
 term = xterm-256color
+
+window-inherit-working-directory = false
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
