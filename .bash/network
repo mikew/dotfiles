@@ -24,16 +24,7 @@ ssh-proxy () {
 }
 
 function server() {
-  # Since some projects use ancient versions of node, simple `npx ...` commands
-  # can fail in unexpected ways. So we actually cd to the tmp folder to use the
-  # system node version.
-
-  dir="$PWD"
-  # https://unix.stackexchange.com/a/174818
-  tmpdir=$(dirname "$(mktemp tmp.XXXXXXXXXX -ut)")
-  pushd "$tmpdir" || return
-  npx serve "$@" -p 4000 "$dir"
-  popd || return
+  mise-global-tool npx serve -p 4000 "$@"
 }
 
 function server-single() {
@@ -41,14 +32,8 @@ function server-single() {
 }
 
 function source-map-explorer() {
-  full_path=$(realpath "$1")
-
-  # https://unix.stackexchange.com/a/174818
-  tmpdir=$(mktemp -d)
-  pushd "$tmpdir" || return
-  npx source-map-explorer "$full_path" --no-border-checks --html index.html
+  mise-global-tool npx source-map-explorer --no-border-checks --html index.html "$1"
   server
-  popd || return
 }
 
 # vim: ft=sh
