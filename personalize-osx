@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -ex
+
+# To get most of these:
+# defaults read > before
+# ... make your changes
+# defaults read > after
+# diff before after
+
+# Trackpad
+
+# Gestures
+# Prefer 4-finger to 3-finger for "global" gestures
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 0
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 0
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerHorizSwipeGesture -int 2
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerVertSwipeGesture -int 2
+defaults write com.apple.dock showAppExposeGestureEnabled -bool true
+defaults write com.apple.dock showMissionControlGestureEnabled -bool true
+
+# Pinch for desktop / applications
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerPinchGesture -int 2
+defaults write com.apple.AppleMultitouchTrackpad TrackpadFiveFingerPinchGesture -int 2
+defaults write com.apple.dock showDesktopGestureEnabled -bool true
+
+defaults write com.apple.dock expose-group-apps -bool true
+
+defaults write com.apple.menuextra.clock ShowDate -bool true
+defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+
+# Three-finger drag
+defaults write com.apple.AppleMultitouchTrackpad DragLock -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+
+# Disable swipe for back
+defaults write -g AppleEnableSwipeNavigateWithScrolls -bool false
+
+# ctrl+scroll to zoom
+defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+defaults write com.apple.universalaccess closeViewScrollWheelModifiersInt -int 262144
+
+# Don't show desktop on click
+defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+
+# Disable edge dragging for tiling
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false
+
+# Keyboard
+defaults write -g InitialKeyRepeat -float 25.0
+defaults write -g KeyRepeat -float 2.0
+
+# Focus all controls with tab
+defaults write -g AppleKeyboardUIMode -int 2
+
+# Disable autocorrect
+defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write -g WebAutomaticSpellingCorrectionEnabled -bool false
+defaults write -g NSAutomaticCapitalizationEnabled -bool false
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false
+defaults write -g NSAutomaticDashSubstitutionEnabled -bool false
+defaults write -g NSAutomaticInlinePredictionEnabled -bool false
+
+# Dock
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock show-recents -bool false
+
+# UI
+defaults write com.apple.universalaccess reduceTransparency 1
+defaults write com.apple.universalaccess showWindowTitlebarIcons 1
+defaults delete -g AppleIconAppearanceTheme || true
+
+# Desktop
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+
+defaults write com.apple.WindowManager StandardHideDesktopIcons -bool false
+defaults write com.apple.WindowManager HideDesktop -bool false
+
+defaults write com.apple.finder ShowStatusBar -int 1
+defaults write com.apple.finder ShowSidebar -int 1
+defaults write com.apple.finder SidebarTagsSctionDisclosedState -int 0
+
+defaults write com.apple.finder FXPreferredViewStyle Nlsv
+defaults write com.apple.finder FXDefaultSearchScope SCcf
+defaults write com.apple.finder NewWindowTarget PfHm
+
+defaults write com.apple.finder FXICloudDriveDocuments 0
+defaults write com.apple.finder FXICloudDriveDesktop 0
+
+defaults write -g AppleShowAllExtensions -bool true
+
+defaults write com.apple.finder DesktopViewSettings -dict-add GroupBy "Date Added"
+PLIST="$HOME/Library/Preferences/com.apple.finder.plist"
+PBUDDY="/usr/libexec/PlistBuddy"
+
+# Ensure the parent dictionaries exist (if they don't, these will fail gracefully or you can Add them)
+$PBUDDY -c "Add :DesktopViewSettings:IconViewSettings dict" "$PLIST" || true
+
+# Set the individual values
+$PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy dateAdded" "$PLIST"
+$PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" "$PLIST"
+$PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:iconSize 64" "$PLIST"
+$PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:labelOnBottom 0" "$PLIST"
+$PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" "$PLIST"
+
+# Hide Widgets
+defaults write com.apple.WindowManager StandardHideWidgets -int 1
+defaults write com.apple.WindowManager StageManagerHideWidgets -int 1
+
+# Disable terminal beeps
+osascript -e "set volume alert volume 0"
+
+# Safari
+defaults write com.apple.Safari ShowOverlayStatusBar -bool true
+defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+defaults write com.apple.Safari ShowFavoritesBar -bool false
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+defaults write com.apple.Safari WebKitPreferences.tabFocusesLinks -bool true
+defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
+
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari WebKitPreferences.developerExtrasEnabled -bool true
+
+# Siri
+defaults write com.apple.assistant.support "Assistant Enabled" -bool false
+
+defaults write com.apple.screencapture showsClicks -bool true
+defaults write com.apple.screencapture show-thumbnail -bool false
+
+killall Dock
+killall Finder
