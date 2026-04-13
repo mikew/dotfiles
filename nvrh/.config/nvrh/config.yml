@@ -19,6 +19,12 @@ default:
   #   - --no-fork
 
 servers:
+  vscode-remote:
+    use-nvim-embed: true
+    nvim-cmd:
+      # - /home/linuxbrew/.linuxbrew/bin/nvim
+      - /home/mike/Work/neovim/nvim-dev
+
   nvrh-test-linux:
     use-nvim-embed: true
     nvim-cmd:
