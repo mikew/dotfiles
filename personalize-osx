@@ -2,10 +2,12 @@
 set -ex
 
 # To get most of these:
+# ```
 # defaults read > before
-# ... make your changes
+# # ... make your changes
 # defaults read > after
 # diff before after
+# ```
 
 # Trackpad
 
@@ -66,6 +68,12 @@ defaults write -g NSAutomaticInlinePredictionEnabled -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock show-recents -bool false
 
+# Hot Corners
+defaults write com.apple.dock wvous-tl-corner -int 10
+defaults write com.apple.dock wvous-tr-corner -int 2
+defaults write com.apple.dock wvous-br-corner -int 4
+defaults write com.apple.dock wvous-bl-corner -int 3
+
 # UI
 defaults write com.apple.universalaccess reduceTransparency 1
 defaults write com.apple.universalaccess showWindowTitlebarIcons 1
@@ -79,6 +87,11 @@ defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.WindowManager StandardHideDesktopIcons -bool false
 defaults write com.apple.WindowManager HideDesktop -bool false
 
+# Hide Widgets
+defaults write com.apple.WindowManager StandardHideWidgets -int 1
+defaults write com.apple.WindowManager StageManagerHideWidgets -int 1
+
+# Finder
 defaults write com.apple.finder ShowStatusBar -int 1
 defaults write com.apple.finder ShowSidebar -int 1
 defaults write com.apple.finder SidebarTagsSctionDisclosedState -int 0
@@ -106,10 +119,6 @@ $PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:iconSize 64" "$PLIST"
 $PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:labelOnBottom 0" "$PLIST"
 $PBUDDY -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" "$PLIST"
 
-# Hide Widgets
-defaults write com.apple.WindowManager StandardHideWidgets -int 1
-defaults write com.apple.WindowManager StageManagerHideWidgets -int 1
-
 # Disable terminal beeps
 osascript -e "set volume alert volume 0"
 
@@ -128,6 +137,7 @@ defaults write com.apple.Safari WebKitPreferences.developerExtrasEnabled -bool t
 # Siri
 defaults write com.apple.assistant.support "Assistant Enabled" -bool false
 
+# Screen Recording
 defaults write com.apple.screencapture showsClicks -bool true
 defaults write com.apple.screencapture show-thumbnail -bool false
 
