@@ -1,18 +1,18 @@
 default:
   ssh-path: internal
-  #insecure-direct-connect: true
   local-editor:
     - nvim-qt
     - --nofork
     - --server
     - "{{SOCKET_PATH}}"
   # local-editor:
-  #   - /Applications/Neovide.app/Contents/MacOS/neovide
+  #   - neovide
   #   - --neovim-bin
   #   - /opt/homebrew/bin/nvim
   #   - --server
   #   - "{{SOCKET_PATH}}"
   #   - --no-fork
+  #   - --no-multigrid
 
 servers:
   vscode-remote:
