@@ -28,6 +28,14 @@ if [[ $OSTYPE == darwin* ]] ; then
   try-source ~/.bash/osx
 fi
 
+if [[ $OSTYPE == *win* ]] ; then
+  try-source ~/.bash/windows
+fi
+
+if [[ $OSTYPE == *msys* ]] ; then
+  try-source ~/.bash/windows
+fi
+
 if [ -n "$ITERM_PROFILE" ]; then
   try-source ~/.bash/iterm2_shell_integration
 fi
