@@ -1,10 +1,6 @@
 default:
   ssh-path: internal
   #insecure-direct-connect: true
-  server-env:
-    - NVIM_FORCE_OS=macos
-    - NVIM_FORCE_UI=nvim-qt
-    #- NVIM_FORCE_UI=neovide
   local-editor:
     - nvim-qt
     - --nofork
