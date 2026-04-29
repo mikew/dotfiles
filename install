@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
+export MSYS=winsymlinks:nativestrict
+
 cd "$(dirname "$0")"
 
 find . -maxdepth 1 -type d -not -name '.' -not -name '.git' -not -name 'examples' | while read -r line; do
