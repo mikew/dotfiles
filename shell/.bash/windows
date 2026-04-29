@@ -1,0 +1,43 @@
+# Enable symlinks in Git Bash.
+export MSYS=winsymlinks:nativestrict
+
+# Set XDG dirs because ~/AppData is annoying.
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+#export XDG_RUNTIME_DIR="/run/user/1000"
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_VIDEOS_DIR="$HOME/Videos"
+export XDG_TEMPLATES_DIR="$HOME/Templates"
+export XDG_PUBLICSHARE_DIR="$HOME/Public"
+
+# Prefer Windows included ssh instead of Git Bash because it integrates with
+# 1password's SSH Agent.
+export PATH="/c/Windows/System32/OpenSSH:$PATH"
+
+winget-install-portable() {
+  package="$1"
+  shift
+  winget install "$package" --location "D:\\programs\\$package" "$@"
+}
+
+nvim() {
+  if command -v mise; then
+    mise exec -- nvim "$@"
+  else
+    nvim "$@"
+  fi
+}
+
+nvim-qt() {
+  if command -v mise; then
+    mise exec -- nvim-qt "$@"
+  else
+    nvim "$@"
+  fi
+}
