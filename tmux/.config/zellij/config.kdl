@@ -1,0 +1,114 @@
+default_mode "normal"
+default_layout "compact"
+pane_frames false
+simplified_ui true
+welcome_screen false
+
+mouse_mode true
+scroll_buffer_size 10000
+support_kitty_keyboard_protocol true
+theme "nord"
+
+ui {
+  pane_frames {
+    rounded_corners false
+    hide_session_name false
+  }
+}
+
+// Plugin aliases - can be used to change the implementation of Zellij
+// changing these requires a restart to take effect
+plugins {
+    // about location="zellij:about"
+    compact-bar location="zellij:compact-bar"
+    configuration location="zellij:configuration"
+    filepicker location="zellij:strider" {
+        // cwd "/"
+    }
+    plugin-manager location="zellij:plugin-manager"
+    session-manager location="zellij:session-manager"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    tab-bar location="zellij:tab-bar"
+    // welcome-screen location="zellij:session-manager" {
+    //     welcome_screen false
+    // }
+}
+
+keybinds clear-defaults=true {
+  normal {}
+  locked {}
+
+  renametab {
+    bind "Esc" "Ctrl c" { UndoRenameTab; SwitchToMode "Normal"; }
+  }
+
+  scroll {
+    bind "Esc" "Enter" "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
+    bind "j" "Down" { ScrollDown; }
+    bind "k" "Up" { ScrollUp; }
+    bind "h" "Left" "PageUp" "Ctrl b" { PageScrollUp; }
+    bind "l" "Right" "PageDown" "Ctrl f" { PageScrollDown; }
+    bind "d" { HalfPageScrollDown; }
+    bind "u" { HalfPageScrollUp; }
+  }
+
+  tmux {
+    // C-a C-a => last tab/window approximation
+    bind "Ctrl a" { ToggleTab; SwitchToMode "Normal"; }
+
+    // prefix + a => send Ctrl-a to the app
+    bind "a" { Write 1; SwitchToMode "Normal"; }
+
+    // creation / splitting
+    bind "c" { NewTab; SwitchToMode "Normal"; }
+    bind "|" "\\" { NewPane "Right"; SwitchToMode "Normal"; }
+    bind "-" { NewPane "Down"; SwitchToMode "Normal"; }
+
+    // closing
+    bind "x" { CloseFocus; SwitchToMode "Normal"; }
+    bind "X" { CloseTab; SwitchToMode "Normal"; }
+
+    // tab navigation
+    bind "," { GoToPreviousTab; SwitchToMode "Normal"; }
+    bind "." { GoToNextTab; SwitchToMode "Normal"; }
+    bind "<" { MoveTab "Left"; SwitchToMode "Normal"; }
+    bind ">" { MoveTab "Right"; SwitchToMode "Normal"; }
+
+    // renaming
+    bind "n" { SwitchToMode "RenameTab"; TabNameInput 0; }
+
+    // copy/scroll mode
+    bind "[" "Esc" "Up" { SwitchToMode "Scroll"; }
+
+    // zoom
+    bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+
+    // resize
+    bind "Ctrl j" { Resize "Left"; SwitchToMode "Normal"; }
+    bind "Ctrl l" { Resize "Right"; SwitchToMode "Normal"; }
+    bind "Ctrl k" { Resize "Down"; SwitchToMode "Normal"; }
+    bind "Ctrl i" { Resize "Up"; SwitchToMode "Normal"; }
+
+    // clear pane
+    bind "l" { Clear; SwitchToMode "Normal"; }
+
+    // detach
+    bind "d" { Detach; SwitchToMode "Normal"; }
+
+    // closest available equivalents
+    bind "q" { Quit; }
+    bind "Q" { Quit; }
+  }
+
+  // shared {
+  //   // tmux -n Home / End passthrough
+  //   bind "Home" { Write 27 79 72; }
+  //   bind "End" { Write 27 79 70; }
+  // }
+
+  shared_except "tmux" {
+    // Use Ctrl-a as prefix to enter tmux mode
+    bind "Ctrl a" { SwitchToMode "Tmux"; }
+  }
+}
