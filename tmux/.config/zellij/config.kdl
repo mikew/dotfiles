@@ -2,7 +2,10 @@ default_mode "normal"
 default_layout "compact"
 pane_frames false
 simplified_ui true
+
 welcome_screen false
+show_startup_tips false
+show_release_notes false
 
 mouse_mode true
 scroll_buffer_size 10000
