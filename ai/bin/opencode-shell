@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+
+# When opencode executes code it does so without any of your shell environment
+# setup (mise, direnv, $PATH, shell environment, etc). This gets around that by
+# running an interactive shell.
+exec "$SHELL" -i "$@"

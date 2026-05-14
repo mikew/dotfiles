@@ -1,0 +1,13 @@
+[Unit]
+Description=Opencode Web Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h
+ExecStart=%h/bin/opencode-web
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

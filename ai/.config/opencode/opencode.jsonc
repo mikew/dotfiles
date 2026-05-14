@@ -1,0 +1,59 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "plan",
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "{file:~/.secrets/litellm-url}/v1",
+        "apiKey": "{file:~/.secrets/litellm-key}",
+      },
+      "models": {
+        "claude-opus-4-7": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+        "claude-sonnet-4-6": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+        "geraldo-think-code": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+        "gpt-5.5": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+        "work-laptop-test": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+      },
+    },
+  },
+  "server": {
+    "hostname": "0.0.0.0",
+  },
+  "shell": "opencode-shell",
+  "mcp": {
+    "my-remote-mcp": {
+      "type": "remote",
+      "url": "{file:~/.secrets/litellm-url}/mcp_searxng/mcp",
+      "enabled": true,
+      "headers": {
+        "x-litellm-api-key": "Bearer {file:~/.secrets/litellm-key}",
+      },
+    },
+  },
+}

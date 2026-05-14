@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+ENV=(
+  # Don't want this in my environment but `opencode.json` doesn't support
+  # something like `password: "{file:~/.secrets/opencode-serve-key}"`
+  "OPENCODE_SERVER_PASSWORD=$(cat $HOME/.secrets/opencode-serve-key)"
+)
+
+# This script might be called from a non-shell environment like systemd, so
+# make sure we get the full shell environment.
+CMD=(
+  "$SHELL"
+  -i
+  -c
+  'mise-global-tool npx opencode-ai@latest web'
+)
+
+exec env \
+  "${ENV[@]}" \
+  "${CMD[@]}"
