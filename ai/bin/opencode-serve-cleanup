@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+# https://github.com/anomalyco/opencode/issues/6523
+# https://github.com/anomalyco/opencode/issues/16996
+# Really feeling this person:
+# https://github.com/anomalyco/opencode/issues/6523#issuecomment-4129380783
+# Congrats, software developers, we've turned our work into talking to
+# automated voice systems.
+rm -f /tmp/.*-00000000.so
