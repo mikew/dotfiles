@@ -13,7 +13,7 @@ CMD=(
   "$SHELL"
   -i
   -c
-  'mise-global-tool npx opencode-ai@latest web'
+  'opencode web'
 )
 
 exec env \
