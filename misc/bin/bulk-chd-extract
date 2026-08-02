@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+chdman="${CHDMAN:-chdman}"
+
+if ! command -v "$chdman" &>/dev/null; then
+  echo "error: chdman not found. Install it or set CHDMAN env var." >&2
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  echo "usage: bulk-chd-extract <file|dir> ..." >&2
+  exit 1
+fi
+
+extract_file() {
+  local file="$1"
+  local dir
+  dir="$(dirname "$file")"
+  local base
+  base="$(basename "$file")"
+  base="${base%.*}"
+
+  if [[ -f "$dir/$base.cue" ]]; then
+    echo "skipping $file (output already exists)"
+    return
+  fi
+
+  echo "$file -> $dir/$base.cue"
+  "$chdman" extractcd -i "$file" -o "$dir/$base.cue"
+}
+
+for arg in "$@"; do
+  if [[ -d "$arg" ]]; then
+    find "$arg" -type f -iname '*.chd' | while IFS= read -r file; do
+      extract_file "$file"
+    done
+  elif [[ -f "$arg" ]]; then
+    extract_file "$arg"
+  else
+    echo "skipping $arg (not a file or directory)" >&2
+  fi
+done

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+chdman="${CHDMAN:-chdman}"
+
+if ! command -v "$chdman" &>/dev/null; then
+  echo "error: chdman not found. Install it or set CHDMAN env var." >&2
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  echo "usage: bulk-disk2chd <file|dir> ..." >&2
+  exit 1
+fi
+
+convert_file() {
+  local file="$1"
+  local outdir="$2"
+  local ext="${file##*.}"
+  ext="${ext,,}"
+  local base
+  base="$(basename "$file")"
+  base="${base%.*}"
+  local outfile="$outdir/$base.chd"
+
+  if [[ -f "$outfile" ]]; then
+    echo "skipping $file (output already exists)"
+    return
+  fi
+
+  case "$ext" in
+    cue|iso)
+      echo "$file -> $outfile"
+      "$chdman" createcd -i "$file" -o "$outfile" -f
+      ;;
+    bin)
+      ;;
+    *)
+      echo "skipping $file (unsupported type)" >&2
+      ;;
+  esac
+}
+
+for arg in "$@"; do
+  if [[ -d "$arg" ]]; then
+    outdir="$arg/chd"
+    mkdir -p "$outdir"
+    find "$arg" -type f -iname "*.cue" -o -iname "*.iso" | while IFS= read -r file; do
+      convert_file "$file" "$outdir"
+    done
+  elif [[ -f "$arg" ]]; then
+    outdir="$(dirname "$arg")/chd"
+    mkdir -p "$outdir"
+    convert_file "$arg" "$outdir"
+  else
+    echo "skipping $arg (not a file or directory)" >&2
+  fi
+done
