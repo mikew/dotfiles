@@ -132,4 +132,16 @@ unix2humantime() {
   date --date="@$1"
 }
 
+yt-dlp-bestmp4() {
+  yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' --merge-output-format mp4 "$@"
+}
+
+yt-dlp-bestaudio() {
+  yt-dlp -f 'bestaudio' --extract-audio --audio-format mp3 "$@"
+}
+
+yt-dlp-bestvideo() {
+  yt-dlp -f 'bestvideo' "$@"
+}
+
 # vim: ft=sh
