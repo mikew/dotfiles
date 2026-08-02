@@ -2,25 +2,13 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "plan",
   "provider": {
-    "litellm": {
+    "litellm-openai": {
       "npm": "@ai-sdk/openai-compatible",
       "options": {
         "baseURL": "{file:~/.secrets/litellm-url}/v1",
         "apiKey": "{file:~/.secrets/litellm-key}",
       },
       "models": {
-        "claude-opus-4-7": {
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"],
-          },
-        },
-        "claude-sonnet-4-6": {
-          "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"],
-          },
-        },
         "geraldo-think-code": {
           "modalities": {
             "input": ["text", "image"],
@@ -34,6 +22,27 @@
           },
         },
         "work-laptop-test": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+      },
+    },
+    "litellm-anthropic": {
+      "npm": "@ai-sdk/anthropic",
+      "options": {
+        "baseURL": "{file:~/.secrets/litellm-url}/v1",
+        "apiKey": "{file:~/.secrets/litellm-key}",
+      },
+      "models": {
+        "claude-opus-4-6": {
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"],
+          },
+        },
+        "claude-sonnet-4-6": {
           "modalities": {
             "input": ["text", "image"],
             "output": ["text"],
