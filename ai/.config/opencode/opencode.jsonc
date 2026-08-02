@@ -56,9 +56,9 @@
   },
   "shell": "opencode-shell",
   "mcp": {
-    "my-remote-mcp": {
+    "searxng": {
       "type": "remote",
-      "url": "{file:~/.secrets/litellm-url}/mcp_searxng/mcp",
+      "url": "{file:~/.secrets/litellm-url}/searxng/mcp",
       "enabled": true,
       "headers": {
         "x-litellm-api-key": "Bearer {file:~/.secrets/litellm-key}",
