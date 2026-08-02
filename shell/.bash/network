@@ -24,7 +24,7 @@ ssh-proxy () {
 }
 
 function server() {
-  mise-global-tool npx serve -p 4000 "$@"
+  mise-global-tool pnpx serve -p 4000 "$@"
 }
 
 function server-single() {
@@ -32,7 +32,7 @@ function server-single() {
 }
 
 function source-map-explorer() {
-  mise-global-tool npx source-map-explorer --no-border-checks --html index.html "$1"
+  mise-global-tool pnpx source-map-explorer --no-border-checks --html index.html "$1"
   server
 }
 
