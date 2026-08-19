@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+dolphin_tool="${DOLPHIN_TOOL:-dolphin-tool}"
+
+if ! command -v "$dolphin_tool" &>/dev/null; then
+  echo "error: dolphin-tool not found. Install it or set DOLPHIN_TOOL env var." >&2
+  exit 1
+fi
+
+if [[ $# -eq 0 ]]; then
+  echo "usage: bulk-disk2rvz <file|dir> ..." >&2
+  exit 1
+fi
+
+convert_file() {
+  local file="$1"
+  local outdir="$2"
+  local ext="${file##*.}"
+  ext="${ext,,}"
+  local base
+  base="$(basename "$file")"
+  base="${base%.*}"
+  local outfile="$outdir/$base.rvz"
+
+  if [[ -f "$outfile" ]]; then
+    echo "skipping $file (output already exists)"
+    return
+  fi
+
+  case "$ext" in
+    iso|gcm|wbfs)
+      echo "$file -> $outfile"
+      "$dolphin_tool" convert \
+        --input="$file" \
+        --output="$outfile" \
+        --format=rvz \
+        --compression=zstd \
+        --compression_level=5 \
+        --block_size=131072 \
+        --scrub
+      ;;
+    *)
+      echo "skipping $file (unsupported type)" >&2
+      ;;
+  esac
+}
+
+for arg in "$@"; do
+  if [[ -d "$arg" ]]; then
+    outdir="$arg/rvz"
+    mkdir -p "$outdir"
+    find "$arg" -type f \( -iname "*.iso" -o -iname "*.gcm" -o -iname "*.wbfs" \) | while IFS= read -r file; do
+      convert_file "$file" "$outdir"
+    done
+  elif [[ -f "$arg" ]]; then
+    outdir="$(dirname "$arg")/rvz"
+    mkdir -p "$outdir"
+    convert_file "$arg" "$outdir"
+  else
+    echo "skipping $arg (not a file or directory)" >&2
+  fi
+done
