@@ -30,7 +30,7 @@ nvim() {
   if command -v mise; then
     mise exec -- nvim "$@"
   else
-    nvim "$@"
+    command nvim "$@"
   fi
 }
 
@@ -38,6 +38,6 @@ nvim-qt() {
   if command -v mise; then
     mise exec -- nvim-qt "$@"
   else
-    nvim "$@"
+    command nvim-qt "$@"
   fi
 }
